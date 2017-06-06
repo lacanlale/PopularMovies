@@ -6,6 +6,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
+import com.example.android.popularmovies.data.MoviePreferences;
+
 public class MainActivity extends AppCompatActivity {
     ImageView mPoster;
 
@@ -21,7 +23,11 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.movies, menu);
         return true;
     }
-
+    //TODO finish loadMovieData after FetchMovieTask is finished
+    void loadMovieData(){
+        String location = MoviePreferences.getPreferredLocation(this);
+        new
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int movieId = item.getItemId();
