@@ -4,6 +4,7 @@ import android.media.Image;
 
 /**
  * Created by Jonathan on 6/6/2017.
+ * Separate class for the Movie items
  */
 
 public class Movie {
@@ -11,9 +12,17 @@ public class Movie {
     String mReleaseDate;
     String mRating;
     String mSynopsis;
-    Image mPoster;
+    String mPoster;
 
-    public Movie(String title, String releaseDate, String rating, String synopsis, Image poster){
+    /**
+     * Movie Object constructor
+     * @param title String value of the Movie title
+     * @param releaseDate String value of the Release Date
+     * @param rating Numerical value (as a String) of the Movie rating
+     * @param synopsis String value of the synopsis
+     * @param poster .PNG/.JPG url of the Movie poster. URL passed to Picasso handler
+     */
+    public Movie(String title, String releaseDate, String rating, String synopsis, String poster){
         mTitle = title;
         mReleaseDate = releaseDate;
         mRating = rating;
@@ -24,9 +33,7 @@ public class Movie {
         return mTitle;
     }
 
-    public void setTitle(String mTitle) {
-        this.mTitle = mTitle;
-    }
+    public void setTitle(String mTitle) { this.mTitle = mTitle; }
 
     public String getReleaseDate() {
         return mReleaseDate;
@@ -52,11 +59,9 @@ public class Movie {
         this.mSynopsis = mSynopsis;
     }
 
-    public Image getPoster() {
-        return mPoster;
-    }
+    public String getPoster() { return mPoster; }
 
-    public void setPoster(Image mPoster) {
+    public void setPoster(String mPoster) {
         this.mPoster = mPoster;
     }
 }
