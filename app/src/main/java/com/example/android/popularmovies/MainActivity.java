@@ -1,10 +1,12 @@
 package com.example.android.popularmovies;
 
+import android.media.Image;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.GridView;
 import android.widget.ImageView;
 
 import com.example.android.popularmovies.data.MoviePreferences;
@@ -15,13 +17,14 @@ import com.example.android.popularmovies.utilities.NetworkUtils;
 import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
-    ImageView mPoster;
+    ImageView posterImage;
+    GridView movieDisplays;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mPoster = (ImageView) findViewById(R.id.iv_poster);
-
+        posterImage = (ImageView) findViewById(R.id.iv_poster);
+        movieDisplays = (GridView) findViewById(R.id.gv_movieData);
         loadMovieData();
     }
     @Override
@@ -39,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int movieId = item.getItemId();
         if(movieId == R.id.action_refresh){
-            mPoster.setImageResource(0); //REMEMBER TO FIX THIS
+            posterImage.setImageResource(0); //REMEMBER TO FIX THIS
 
             return true;
         }
