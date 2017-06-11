@@ -6,8 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.android.popularmovies.data.MoviePreferences;
 import com.example.android.popularmovies.utilities.Movie;
@@ -19,12 +21,14 @@ import java.net.URL;
 public class MainActivity extends AppCompatActivity {
     ImageView posterImage;
     GridView movieDisplays;
+    TextView errorMessage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         posterImage = (ImageView) findViewById(R.id.iv_poster);
         movieDisplays = (GridView) findViewById(R.id.gv_movieData);
+        errorMessage = (TextView) findViewById(R.id.tv_error);
         loadMovieData();
     }
     @Override
@@ -32,11 +36,18 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.movies, menu);
         return true;
     }
+    void showMovieDataView(){
+        movieDisplays.setVisibility(View.VISIBLE);
+        errorMessage.setVisibility(View.INVISIBLE);
+    }
+    void showErrorMessage(){
+        errorMessage.setVisibility(View.VISIBLE);
+        movieDisplays.setVisibility(View.INVISIBLE);
+    }
     void loadMovieData(){
-
-
+        showMovieDataView();
         String preference = MoviePreferences.getPreferredCategory();
-        new FetchMovieTask().execute();
+        new FetchMovieTask().execute(preference);
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
