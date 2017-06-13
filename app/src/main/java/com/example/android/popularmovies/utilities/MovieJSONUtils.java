@@ -17,32 +17,38 @@ import java.util.ArrayList;
 
 /**
  * Created by Jonathan on 6/5/2017.
- * TODO NEARLY THERE
  * include methods to get movie data
- * Simple and full versions
  */
 public class MovieJSONUtils {
-    public static Movie[] getSimpleMovieData(Context context, String movieJSONstr) throws JSONException, IOException {
-        HttpURLConnection moviePage = null;
-        BufferedReader reader = null;
-
+    public static String[] getSimpleMovieData(Context context, String movieJSONstr) throws JSONException {
         JSONObject movieJSON = new JSONObject(movieJSONstr);
         JSONArray movieArray = movieJSON.getJSONArray("results");
 
-        Movie[] parsedData = new Movie[movieArray.length()];
+        String[] parsedData = new String[movieArray.length()];
+        for (int x = 0; x < movieArray.length(); x++) {
+            JSONObject movieInfo = movieArray.getJSONObject(x);
+            String moviePoster = movieInfo.getString("poster_path");
+            parsedData[x] = moviePoster;
+        }
+        return parsedData;
+    }
+    public static String[] getMovieDetails(Context context, String movieJSONstr) throws JSONException {
+        JSONObject movieJSON = new JSONObject(movieJSONstr);
+        JSONArray movieArray = movieJSON.getJSONArray("results");
+
+        String[] parsedData = new String[movieArray.length()];
         for (int x = 0; x < movieArray.length(); x++) {
             JSONObject movieInfo = movieArray.getJSONObject(x);
             String movieOverview = movieInfo.getString("overview");
             String movieRating = movieInfo.getString("vote_average").toString();
             String movieTitle = movieInfo.getString("title");
             String movieReleaseDate = movieInfo.getString("release_date");
-            String moviePoster = movieInfo.getString("poster_path");
-            parsedData[x] = new Movie(movieOverview, movieRating, movieTitle, movieReleaseDate, moviePoster);
+
+            parsedData[x] = ("Title: " + movieTitle +
+                    "\nRating: " + movieRating +
+                    "\nOverview: " + movieOverview +
+                    "\nRelease Date: " + movieReleaseDate);
         }
         return parsedData;
-    }
-
-    public static ContentValues[] getFullMovieData(Context context, String movieJSONstr, String preferred) {
-
     }
 }
