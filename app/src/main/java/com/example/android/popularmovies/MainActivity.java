@@ -14,14 +14,16 @@ import android.widget.TextView;
 import com.example.android.popularmovies.data.MoviePreferences;
 import com.example.android.popularmovies.utilities.MovieJSONUtils;
 import com.example.android.popularmovies.utilities.NetworkUtils;
+import com.example.android.popularmovies.MovieView;
 
 import java.net.URL;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
     ImageView posterImage;
     GridView movieDisplays;
     TextView errorMessage;
     ProgressBar progressBar;
+    MovieView movieViewAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,24 +57,31 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int movieId = item.getItemId();
-        if(movieId == R.id.action_refresh){
-            posterImage.setImageResource(0); //REMEMBER TO FIX THIS
-
+        if(movieId == R.id.action_refresh) {
+            movieViewAdapter.setMovieResource(null); //TODO FIX THIS
+            loadMovieData();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    public class FetchMovieTask extends AsyncTask<String, Void, String[]> {
+    private class FetchMovieTask extends AsyncTask<String, Void, String[]> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             progressBar.setVisibility(View.VISIBLE);
         }
+
         @Override
-        protected void onPostExecute(String[] strings) {
-            super.onPostExecute(strings);
+        protected void onPostExecute(String[] data) {
+            progressBar.setVisibility(View.VISIBLE);
+            if(data != null){
+                showMovieDataView();
+                //TODO have statement for implementing GridView display
+            }
+            else showErrorMessage();
         }
+
         @Override
         protected String[] doInBackground(String... params) {
             if(params.length == 0) return null;
@@ -80,8 +89,7 @@ public class MainActivity extends AppCompatActivity {
             try {
                 URL popularMovie = new URL(NetworkUtils.categoryBuilder(desired));
                 String response = NetworkUtils.getHTTPResponse(popularMovie);
-                String[] data = MovieJSONUtils.getSimpleMovieData(MainActivity.this, response);
-                return data;
+                return MovieJSONUtils.getSimpleMovieData(response);
             }
             catch(Exception e){
                 e.printStackTrace();
