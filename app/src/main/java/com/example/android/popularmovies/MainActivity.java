@@ -7,7 +7,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -19,7 +18,6 @@ import com.example.android.popularmovies.MovieView;
 import java.net.URL;
 
 public class MainActivity extends AppCompatActivity{
-    ImageView posterImage;
     GridView movieDisplays;
     TextView errorMessage;
     ProgressBar progressBar;
@@ -29,11 +27,17 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        posterImage = (ImageView) findViewById(R.id.iv_poster);
         movieDisplays = (GridView) findViewById(R.id.gv_movieData);
         errorMessage = (TextView) findViewById(R.id.tv_error);
         progressBar = (ProgressBar) findViewById(R.id.pb_loadingBar);
 
+        movieDisplays.setAdapter(new MovieView(this));
+        movieDisplays.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO FINISH
+            }
+        });
         loadMovieData();
     }
     @Override
