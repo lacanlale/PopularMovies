@@ -13,6 +13,10 @@
         android:horizontalSpacing="10dp"
         android:stretchMode="columnWidth"
         android:gravity="center">
+        <ImageView
+            android:id="@+id/iv_moviePoster"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
         <ProgressBar
             android:id="@+id/pb_loadingBar"
             android:layout_width="42dp"
