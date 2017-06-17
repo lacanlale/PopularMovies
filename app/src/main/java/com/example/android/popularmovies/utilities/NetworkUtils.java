@@ -12,11 +12,12 @@ import java.util.Scanner;
  */
 
 public final class NetworkUtils {
-    private final static String BASE_URL = "http://api.themoviedb.org/3/movie/?api_key=";
-    private final static String API_KEY = "";
+    private final static String BASE_URL = "http://api.themoviedb.org/3/movie/";
+    private final static String API_KEY = "?api_key=";
     private final static String POPULAR_CATEGORY = "popular";
     private final static String TOP_RATED_CATEGORY = "top_rated";
     private final static String BASE_IMAGE_PATH = "image.tmdb.org/t/p/w640/";
+    private final static String BASE_MOVIE_PATH = "https://api.themoviedb.org/3/movie/";
 
     public static String categoryBuilder(String desiredCategory) {
         String url = BASE_URL + API_KEY;
@@ -25,6 +26,9 @@ public final class NetworkUtils {
     }
     public static String posterBuilder(String path){
         return BASE_IMAGE_PATH + path;
+    }
+    public static String specificMovieBuilder(String id){
+        return BASE_MOVIE_PATH + id + API_KEY;
     }
     public static String getHTTPResponse(URL url) throws IOException {
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();

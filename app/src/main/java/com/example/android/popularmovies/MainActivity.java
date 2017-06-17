@@ -1,5 +1,7 @@
 package com.example.android.popularmovies;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.android.popularmovies.data.MoviePreferences;
+import com.example.android.popularmovies.utilities.DetailActivity;
 import com.example.android.popularmovies.utilities.MovieJSONUtils;
 import com.example.android.popularmovies.utilities.NetworkUtils;
 import com.squareup.picasso.Picasso;
@@ -36,9 +39,11 @@ public class MainActivity extends AppCompatActivity{
         movieViewAdapter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO FINISH SHOULD LOAD DETAILS
+                Intent intentForMovieInfo = new Intent(MainActivity.this, DetailActivity.class);
+                startActivity(intentForMovieInfo);
             }
         });
+
         loadMovieData();
     }
     @Override
@@ -62,15 +67,13 @@ public class MainActivity extends AppCompatActivity{
         try {
             URL popularMovie = new URL(NetworkUtils.categoryBuilder(preference));
             String response = NetworkUtils.getHTTPResponse(popularMovie);
-            posters = MovieJSONUtils.getMovieDetails(response);
+            posters = MovieJSONUtils.getSimpleMovieData(response);
             displayPosters(posters);
         }
         catch(Exception e){ e.printStackTrace(); }
     }
     void displayPosters(String[] posterPaths){
-        for(int count = 0; count < posterPaths.length; count++){
-            Picasso.with(this).load(NetworkUtils.posterBuilder(posterPaths[count])).into(movieViewAdapter);
-        }
+        for(String path: posterPaths) Picasso.with(this).load(NetworkUtils.posterBuilder(path)).into(movieViewAdapter);
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -106,7 +109,7 @@ public class MainActivity extends AppCompatActivity{
             try {
                 URL popularMovie = new URL(NetworkUtils.categoryBuilder(desired));
                 String response = NetworkUtils.getHTTPResponse(popularMovie);
-                return MovieJSONUtils.getMovieDetails(response);
+                return MovieJSONUtils.getSimpleMovieData(response);
             }
             catch(Exception e){
                 e.printStackTrace();

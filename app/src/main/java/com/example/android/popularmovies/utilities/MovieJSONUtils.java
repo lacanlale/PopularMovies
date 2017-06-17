@@ -22,11 +22,12 @@ public class MovieJSONUtils {
         }
         return parsedData;
     }
-    public static String[] getMovieDetails(String movieJSONstr) throws JSONException {
+    //TODO MAKE IT SO THAT IT WILL GET THE DETAILS OF A SINGLE MOVIE
+    public static String getMovieDetails(String movieJSONstr) throws JSONException {
         JSONObject movieJSON = new JSONObject(movieJSONstr);
         JSONArray movieArray = movieJSON.getJSONArray("results");
 
-        String[] parsedData = new String[movieArray.length()];
+        String parsedData = "";
         for (int x = 0; x < movieArray.length(); x++) {
             JSONObject movieInfo = movieArray.getJSONObject(x);
             String movieOverview = movieInfo.getString("overview");
@@ -34,7 +35,7 @@ public class MovieJSONUtils {
             String movieTitle = movieInfo.getString("title");
             String movieReleaseDate = movieInfo.getString("release_date");
 
-            parsedData[x] = ("Title: " + movieTitle +
+            parsedData = ("Title: " + movieTitle +
                     "\nRating: " + movieRating +
                     "\nOverview: " + movieOverview +
                     "\nRelease Date: " + movieReleaseDate);
