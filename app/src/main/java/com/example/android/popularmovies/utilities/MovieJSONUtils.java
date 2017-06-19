@@ -1,7 +1,5 @@
 package com.example.android.popularmovies.utilities;
 
-import android.content.Context;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,24 +20,19 @@ public class MovieJSONUtils {
         }
         return parsedData;
     }
-    //TODO MAKE IT SO THAT IT WILL GET THE DETAILS OF A SINGLE MOVIE
     public static String getMovieDetails(String movieJSONstr) throws JSONException {
         JSONObject movieJSON = new JSONObject(movieJSONstr);
-        JSONArray movieArray = movieJSON.getJSONArray("results");
 
-        String parsedData = "";
-        for (int x = 0; x < movieArray.length(); x++) {
-            JSONObject movieInfo = movieArray.getJSONObject(x);
-            String movieOverview = movieInfo.getString("overview");
-            String movieRating = movieInfo.getString("vote_average");
-            String movieTitle = movieInfo.getString("title");
-            String movieReleaseDate = movieInfo.getString("release_date");
+        String movieOverview = movieJSON.getString("overview");
+        String movieRating = movieJSON.getString("vote_average");
+        String movieTitle = movieJSON.getString("title");
+        String movieReleaseDate = movieJSON.getString("release_date");
 
-            parsedData = ("Title: " + movieTitle +
-                    "\nRating: " + movieRating +
-                    "\nOverview: " + movieOverview +
-                    "\nRelease Date: " + movieReleaseDate);
-        }
+        String parsedData = ("Title: " + movieTitle +
+                "\nRating: " + movieRating +
+                "\nOverview: " + movieOverview +
+                "\nRelease Date: " + movieReleaseDate);
+
         return parsedData;
     }
 }

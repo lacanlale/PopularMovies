@@ -36,13 +36,13 @@ public class MainActivity extends AppCompatActivity{
         progressBar = (ProgressBar) findViewById(R.id.pb_loadingBar);
         movieViewAdapter = (ImageView) findViewById(R.id.iv_moviePoster);
 
-        movieViewAdapter.setOnClickListener(new View.OnClickListener() {
+        /*movieViewAdapter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intentForMovieInfo = new Intent(MainActivity.this, DetailActivity.class);
                 startActivity(intentForMovieInfo);
             }
-        });
+        });*/
 
         loadMovieData();
     }
@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity{
             progressBar.setVisibility(View.VISIBLE);
             if(data != null){
                 showMovieDataView();
-                //TODO have statement for implementing GridView display
+                loadMovieData();
             }
             else showErrorMessage();
         }
@@ -117,5 +117,4 @@ public class MainActivity extends AppCompatActivity{
             }
         }
     }
-
 }

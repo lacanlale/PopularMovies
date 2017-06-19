@@ -21,7 +21,7 @@ public class DetailActivity extends AppCompatActivity {
 
         movieInfo = (TextView) findViewById(R.id.tv_movieInfo);
         try {
-            URL popularMovie = new URL(NetworkUtils.specificMovieBuilder(/* TODO */));
+            URL popularMovie = new URL(NetworkUtils.specificMovieBuilder("yes"));
             String response = NetworkUtils.getHTTPResponse(popularMovie);
             detailedInformation = MovieJSONUtils.getMovieDetails(response);
         }
