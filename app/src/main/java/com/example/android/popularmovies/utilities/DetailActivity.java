@@ -20,11 +20,5 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
 
         movieInfo = (TextView) findViewById(R.id.tv_movieInfo);
-        try {
-            URL popularMovie = new URL(NetworkUtils.specificMovieBuilder("yes"));
-            String response = NetworkUtils.getHTTPResponse(popularMovie);
-            detailedInformation = MovieJSONUtils.getMovieDetails(response);
-        }
-        catch(Exception e){ e.printStackTrace(); }
     }
 }

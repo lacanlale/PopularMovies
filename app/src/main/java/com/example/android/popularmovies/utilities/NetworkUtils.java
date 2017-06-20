@@ -30,6 +30,15 @@ public final class NetworkUtils {
     public static String specificMovieBuilder(String id){
         return BASE_MOVIE_PATH + id + API_KEY;
     }
+    public static String moiveData() {
+        String response = "";
+        try{
+            URL popularMovie = new URL(NetworkUtils.categoryBuilder(POPULAR_CATEGORY));
+            response = NetworkUtils.getHTTPResponse(popularMovie);
+        }
+        catch(Exception e) { e.printStackTrace(); }
+        return response;
+    }
     public static String getHTTPResponse(URL url) throws IOException {
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         try {

@@ -15,17 +15,21 @@ import android.widget.TextView;
 
 import com.example.android.popularmovies.data.MoviePreferences;
 import com.example.android.popularmovies.utilities.DetailActivity;
+import com.example.android.popularmovies.utilities.MovieAdapter;
 import com.example.android.popularmovies.utilities.MovieJSONUtils;
 import com.example.android.popularmovies.utilities.NetworkUtils;
 import com.squareup.picasso.Picasso;
 
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity{
     GridView movieDisplays;
     TextView errorMessage;
     ProgressBar progressBar;
-    ImageView movieViewAdapter;
+    MovieAdapter movieViewAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,15 +38,15 @@ public class MainActivity extends AppCompatActivity{
         movieDisplays = (GridView) findViewById(R.id.gv_movieData);
         errorMessage = (TextView) findViewById(R.id.tv_error);
         progressBar = (ProgressBar) findViewById(R.id.pb_loadingBar);
-        movieViewAdapter = (ImageView) findViewById(R.id.iv_moviePoster);
 
-        /*movieViewAdapter.setOnClickListener(new View.OnClickListener() {
+        //TODO movieDisplays.setAdapter(new MovieAdapter());
+        movieDisplays.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intentForMovieInfo = new Intent(MainActivity.this, DetailActivity.class);
                 startActivity(intentForMovieInfo);
             }
-        });*/
+        });
 
         loadMovieData();
     }
