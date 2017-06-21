@@ -2,6 +2,8 @@ package com.example.android.popularmovies.utilities;
 
 import android.app.Activity;
 
+import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,7 @@ import android.widget.ImageView;
 import com.example.android.popularmovies.Movie;
 import com.example.android.popularmovies.R;
 
+import java.net.URL;
 import java.util.List;
 
 /**
@@ -18,10 +21,8 @@ import java.util.List;
  */
 
 public class MovieAdapter extends ArrayAdapter<Movie>{
-    private static final String LOG_TAG = MovieAdapter.class.getSimpleName();
-
-    public MovieAdapter(Activity activity, List<Movie> movies){
-        super(activity, 0, movies);
+    public MovieAdapter(Activity context, List<Movie> movies){
+        super(context, 0);
     }
 
     @Override
@@ -31,7 +32,11 @@ public class MovieAdapter extends ArrayAdapter<Movie>{
         if(convertView != null) convertView = LayoutInflater.from(getContext()).inflate(R.layout.activity_main, parent, false);
 
         ImageView icon = (ImageView) convertView.findViewById(R.id.iv_moviePoster);
-        icon.setImageResource(Integer.parseInt(movie.getmPoster()));
+        //Drawable image = Drawable.createFromPath(
+          //      NetworkUtils.getHTTPResponse(
+               //         new URL(
+                  //              NetworkUtils.posterBuilder())));
+        //icon.setImageDrawable(image);
 
         return convertView;
     }

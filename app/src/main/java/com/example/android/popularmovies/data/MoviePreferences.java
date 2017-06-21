@@ -11,6 +11,6 @@ public class MoviePreferences {
         preferred_category = category;
     }
     static public String getPreferredCategory(){
-        return preferred_category;
+        return preferred_category.equals("") ? DEFAULT_CATEGORY : preferred_category;
     }
 }
