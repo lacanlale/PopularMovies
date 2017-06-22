@@ -13,7 +13,7 @@ import java.util.Scanner;
 
 public final class NetworkUtils {
     private final static String BASE_URL = "http://api.themoviedb.org/3/movie/";
-    private final static String API_KEY = "?api_key=";
+    private final static String API_KEY = "?api_key=d0db4a575a2312422dde257f93e6c101";
     private final static String POPULAR_CATEGORY = "popular";
     private final static String TOP_RATED_CATEGORY = "top_rated";
     private final static String BASE_IMAGE_PATH = "image.tmdb.org/t/p/w640/";
@@ -34,7 +34,7 @@ public final class NetworkUtils {
         String response = "";
         try{
             URL popularMovie = new URL(NetworkUtils.categoryBuilder(POPULAR_CATEGORY));
-            response = NetworkUtils.getHTTPResponse(popularMovie);
+            response = getHTTPResponse(popularMovie);
         }
         catch(Exception e) { e.printStackTrace(); }
         return response;

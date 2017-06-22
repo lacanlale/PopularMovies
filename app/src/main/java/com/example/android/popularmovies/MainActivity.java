@@ -20,6 +20,7 @@ import com.squareup.picasso.Picasso;
 
 import java.net.URL;
 
+//TODO FOCUS ON GETTING POSTERS DISPLAYED. POSSIBLY FIX ADAPTER
 public class MainActivity extends AppCompatActivity{
     GridView movieDisplays;
     TextView errorMessage;
@@ -54,12 +55,12 @@ public class MainActivity extends AppCompatActivity{
         movieDisplays.setVisibility(View.VISIBLE);
         errorMessage.setVisibility(View.INVISIBLE);
     }
+    //TODO ERROR IS CRASHING APP. MAY JUST REMOVE
     void showErrorMessage(){
-        errorMessage.setVisibility(View.VISIBLE);
         movieDisplays.setVisibility(View.INVISIBLE);
+        errorMessage.setVisibility(View.VISIBLE);
     }
     void loadMovieData(){
-        showMovieDataView();
         String preference = MoviePreferences.getPreferredCategory();
         new FetchMovieTask().execute(preference);
         String[] posters;
@@ -72,7 +73,7 @@ public class MainActivity extends AppCompatActivity{
         catch(Exception e){ e.printStackTrace(); }
     }
     void displayPosters(String[] posterPaths){
-        for(String path: posterPaths) Picasso.with(this).load(NetworkUtils.posterBuilder(path)).into(moviePoster);
+        for(String path: posterPaths) Picasso.with(getApplicationContext()).load(NetworkUtils.posterBuilder(path)).into(moviePoster);
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -98,7 +99,7 @@ public class MainActivity extends AppCompatActivity{
                 showMovieDataView();
                 loadMovieData();
             }
-            else showErrorMessage();
+            //else showErrorMessage();
         }
 
         @Override
