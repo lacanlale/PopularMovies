@@ -1,17 +1,22 @@
 package com.example.android.popularmovies;
 
+import android.os.Parcelable;
+
 /**
  * Created by Jonathan on 6/18/2017.
  */
 
-public class Movie {
+public class Movie{
+    private int mId;
+
     private String mPoster;
     private String mTitle;
     private String mRating;
     private String mReleaseDate;
     private String mOverview;
 
-    public Movie(String poster, String title, String rating, String releaseDate, String overview) {
+    public Movie(int id, String poster, String title, String rating, String releaseDate, String overview) {
+        this.mId = id;
         this.mPoster = poster;
         this.mTitle = title;
         this.mRating = rating;
@@ -37,4 +42,6 @@ public class Movie {
     public String getmOverview() {
         return mOverview;
     }
+
+    public int  getmId() { return  mId; }
 }

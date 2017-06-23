@@ -1,22 +1,26 @@
 package com.example.android.popularmovies.utilities;
 
+import com.example.android.popularmovies.Movie;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+
 /**
  * Created by Jonathan on 6/5/2017.
  * include methods to get movie data
+ * TODO MAKE ALL METHODS RETURN AS AN ARRAY LIST. FIX SIMPLE DATE FIRST
+ * Current issue is most likely with API reader. Fix JSON utils class
  */
 public class MovieJSONUtils {
-    public static String[] getSimpleMovieData(String movieJSONstr) throws JSONException {
-        JSONObject movieJSON = new JSONObject(movieJSONstr);
-        JSONArray movieArray = movieJSON.getJSONArray("results");
+    public static ArrayList<String> getSimpleMovieData(String movieJSONstr) throws JSONException {
+        Movie[] movieData = details(movieJSONstr);
 
-        String[] parsedData = new String[movieArray.length()];
-        for (int x = 0; x < movieArray.length(); x++) {
-            JSONObject movieInfo = movieArray.getJSONObject(x);
-            String moviePoster = movieInfo.getString("poster_path");
-            parsedData[x] = moviePoster;
+        ArrayList<String> parsedData = new ArrayList<>();
+        for(Movie m : movieData){
+            parsedData.add(m.getmPoster());
         }
         return parsedData;
     }
@@ -49,6 +53,28 @@ public class MovieJSONUtils {
      * @return returns data (in string[] format) of movies
      * @throws JSONException
      */
+    private static Movie[] details(String movieJSONstr) throws JSONException {
+        JSONObject movieJSON = new JSONObject(movieJSONstr);
+        JSONArray movieArray = movieJSON.getJSONArray("results");
+
+        Movie[] parsedData = new Movie[movieArray.length()];
+        for (int x = 0; x < movieArray.length(); x++) {
+            JSONObject movie = movieArray.getJSONObject(x);
+
+            int id = movie.getInt("id");
+            String moviePoster = movie.getString("poster_path");
+            String movieOverview = movie.getString("overview");
+            String movieRating = movie.getString("vote_average");
+            String movieTitle = movie.getString("title");
+            String movieReleaseDate = movie.getString("release_date");
+
+            Movie data = new Movie(id, moviePoster, movieTitle, movieRating, movieReleaseDate, movieOverview);
+
+            parsedData[x] = data;
+        }
+        return parsedData;
+    }
+
     public static String[] getMovieDetails(String movieJSONstr) throws JSONException {
         JSONObject movieJSON = new JSONObject(movieJSONstr);
         JSONArray movieArray = movieJSON.getJSONArray("results");

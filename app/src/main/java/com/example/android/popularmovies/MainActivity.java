@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,11 +15,15 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.android.popularmovies.data.MoviePreferences;
+import com.example.android.popularmovies.utilities.MovieAdapter;
 import com.example.android.popularmovies.utilities.MovieJSONUtils;
 import com.example.android.popularmovies.utilities.NetworkUtils;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONException;
+
 import java.net.URL;
+import java.util.ArrayList;
 
 //TODO FOCUS ON GETTING POSTERS DISPLAYED. POSSIBLY FIX ADAPTER
 public class MainActivity extends AppCompatActivity{
@@ -26,6 +31,8 @@ public class MainActivity extends AppCompatActivity{
     TextView errorMessage;
     ProgressBar progressBar;
     ImageView moviePoster;
+    ArrayList<String> movieData = new ArrayList<>();
+    MovieAdapter movieAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +43,15 @@ public class MainActivity extends AppCompatActivity{
         progressBar = (ProgressBar) findViewById(R.id.pb_loadingBar);
         moviePoster = (ImageView) findViewById(R.id.iv_moviePoster);
 
+        String jsonResponse = NetworkUtils.moiveData();
+        Log.d("V", ("!!!!!!!" + jsonResponse + "!!!!!!!"));
+        try { movieData = MovieJSONUtils.getSimpleMovieData(jsonResponse); }
+        catch (JSONException e){ e.printStackTrace(); }
+
+        movieAdapter = new MovieAdapter(this, R.id.gv_movieData, movieData);
+        movieAdapter.setData(movieData);
+
+        movieDisplays.setAdapter(movieAdapter);
         /*movieDisplays.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -43,8 +59,7 @@ public class MainActivity extends AppCompatActivity{
                 startActivity(intentForMovieInfo);
             }
         });*/
-
-        loadMovieData();
+        new FetchMovieTask().execute(MoviePreferences.getPreferredCategory());
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -60,26 +75,12 @@ public class MainActivity extends AppCompatActivity{
         movieDisplays.setVisibility(View.INVISIBLE);
         errorMessage.setVisibility(View.VISIBLE);
     }
-    void loadMovieData(){
-        String preference = MoviePreferences.getPreferredCategory();
-        new FetchMovieTask().execute(preference);
-        String[] posters;
-        try {
-            URL popularMovie = new URL(NetworkUtils.categoryBuilder(preference));
-            String response = NetworkUtils.getHTTPResponse(popularMovie);
-            posters = MovieJSONUtils.getSimpleMovieData(response);
-            displayPosters(posters);
-        }
-        catch(Exception e){ e.printStackTrace(); }
-    }
-    void displayPosters(String[] posterPaths){
-        for(String path: posterPaths) Picasso.with(getApplicationContext()).load(NetworkUtils.posterBuilder(path)).into(moviePoster);
-    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int movieId = item.getItemId();
         if(movieId == R.id.action_refresh) {
-            loadMovieData();
+            //loadMovieData();
+
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -94,11 +95,16 @@ public class MainActivity extends AppCompatActivity{
 
         @Override
         protected void onPostExecute(String[] data) {
-            progressBar.setVisibility(View.VISIBLE);
-            if(data != null){
-                showMovieDataView();
-                loadMovieData();
-            }
+            //progressBar.setVisibility(View.VISIBLE);
+            //if(data != null){
+                MovieAdapter adapter = new MovieAdapter(
+                        MainActivity.this ,R.layout.activity_main, movieData);
+                if(movieData.size()>0)
+                {
+                    movieAdapter.setData(movieData);
+                    movieDisplays.setAdapter(adapter);
+                }
+
             //else showErrorMessage();
         }
 
@@ -109,7 +115,7 @@ public class MainActivity extends AppCompatActivity{
             try {
                 URL popularMovie = new URL(NetworkUtils.categoryBuilder(desired));
                 String response = NetworkUtils.getHTTPResponse(popularMovie);
-                return MovieJSONUtils.getSimpleMovieData(response);
+                return MovieJSONUtils.getMovieDetails(response);
             }
             catch(Exception e){
                 e.printStackTrace();
