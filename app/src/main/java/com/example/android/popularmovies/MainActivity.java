@@ -43,15 +43,15 @@ public class MainActivity extends AppCompatActivity{
         progressBar = (ProgressBar) findViewById(R.id.pb_loadingBar);
         moviePoster = (ImageView) findViewById(R.id.iv_moviePoster);
 
-        String jsonResponse = NetworkUtils.moiveData();
-        Log.d("V", ("!!!!!!!" + jsonResponse + "!!!!!!!"));
-        try { movieData = MovieJSONUtils.getSimpleMovieData(jsonResponse); }
-        catch (JSONException e){ e.printStackTrace(); }
-
-        movieAdapter = new MovieAdapter(this, R.id.gv_movieData, movieData);
-        movieAdapter.setData(movieData);
-
-        movieDisplays.setAdapter(movieAdapter);
+        //TODO should be in AsyncTask
+//        String jsonResponse = NetworkUtils.moiveData();
+//        try { movieData = MovieJSONUtils.getSimpleMovieData(jsonResponse); }
+//        catch (JSONException e){ e.printStackTrace(); }
+//
+//        movieAdapter = new MovieAdapter(this, R.id.gv_movieData, movieData);
+//        movieAdapter.setData(movieData);
+//
+//        movieDisplays.setAdapter(movieAdapter);
         /*movieDisplays.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,30 +91,28 @@ public class MainActivity extends AppCompatActivity{
         protected void onPreExecute() {
             super.onPreExecute();
             progressBar.setVisibility(View.VISIBLE);
+            MovieAdapter adapter = new MovieAdapter(
+                    MainActivity.this ,R.layout.activity_main, movieData);
+            if(movieData.size()>0)
+            {
+                movieAdapter.setData(movieData);
+                movieDisplays.setAdapter(adapter);
+            }
         }
-
-        @Override
-        protected void onPostExecute(String[] data) {
-            //progressBar.setVisibility(View.VISIBLE);
-            //if(data != null){
-                MovieAdapter adapter = new MovieAdapter(
-                        MainActivity.this ,R.layout.activity_main, movieData);
-                if(movieData.size()>0)
-                {
-                    movieAdapter.setData(movieData);
-                    movieDisplays.setAdapter(adapter);
-                }
-
-            //else showErrorMessage();
-        }
-
         @Override
         protected String[] doInBackground(String... params) {
+            //todo biggest complication is issue with networking.
+            String length = "Length of params(L104): " + params.length;
+
+
             if(params.length == 0) return null;
             String desired = params[0];
             try {
                 URL popularMovie = new URL(NetworkUtils.categoryBuilder(desired));
                 String response = NetworkUtils.getHTTPResponse(popularMovie);
+
+                Log.d("NETWORKING", response);
+
                 return MovieJSONUtils.getMovieDetails(response);
             }
             catch(Exception e){
