@@ -11,7 +11,6 @@ import java.util.ArrayList;
 /**
  * Created by Jonathan on 6/5/2017.
  * include methods to get movie data
- * TODO MAKE ALL METHODS RETURN AS AN ARRAY LIST. FIX SIMPLE DATE FIRST
  * Current issue is most likely with API reader. Fix JSON utils class
  */
 public class MovieJSONUtils {

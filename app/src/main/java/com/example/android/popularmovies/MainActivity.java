@@ -101,18 +101,11 @@ public class MainActivity extends AppCompatActivity{
         }
         @Override
         protected String[] doInBackground(String... params) {
-            //todo biggest complication is issue with networking.
-            String length = "Length of params(L104): " + params.length;
-
-
             if(params.length == 0) return null;
             String desired = params[0];
             try {
                 URL popularMovie = new URL(NetworkUtils.categoryBuilder(desired));
                 String response = NetworkUtils.getHTTPResponse(popularMovie);
-
-                Log.d("NETWORKING", response);
-
                 return MovieJSONUtils.getMovieDetails(response);
             }
             catch(Exception e){

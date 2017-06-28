@@ -11,16 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.example.android.popularmovies.Movie;
 import com.example.android.popularmovies.R;
 import com.squareup.picasso.Picasso;
 
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by Jonathan on 6/18/2017.
  */

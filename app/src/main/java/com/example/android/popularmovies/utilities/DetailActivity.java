@@ -9,7 +9,13 @@ import com.example.android.popularmovies.R;
 import com.example.android.popularmovies.data.MoviePreferences;
 
 import java.net.URL;
+//TODO Class still needs to be finished
 
+/**
+ * Details are used for onClick
+ * Class should utilize methods that are for displaying
+ * the title, rating, release date, and overview
+ */
 public class DetailActivity extends AppCompatActivity {
     String detailedInformation;
     TextView movieInfo;

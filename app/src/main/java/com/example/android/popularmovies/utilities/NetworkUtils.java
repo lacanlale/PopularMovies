@@ -21,8 +21,9 @@ public final class NetworkUtils {
     private final static String BASE_MOVIE_PATH = "https://api.themoviedb.org/3/movie/";
 
     public static String categoryBuilder(String desiredCategory) {
-        String url = BASE_URL + API_KEY;
+        String url = BASE_URL;
         url += desiredCategory.equals("popular") ? POPULAR_CATEGORY : TOP_RATED_CATEGORY;
+        url += API_KEY;
         return url;
     }
     public static String posterBuilder(String path){
@@ -42,6 +43,8 @@ public final class NetworkUtils {
         catch(Exception e) { e.printStackTrace(); }
         return response;
     }
+
+    //TODO JSON response is incorrect (not actually responding)
     public static String getHTTPResponse(URL url) throws IOException {
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         try {
