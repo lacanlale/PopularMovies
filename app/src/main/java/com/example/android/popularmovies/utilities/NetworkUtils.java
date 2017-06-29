@@ -1,5 +1,7 @@
 package com.example.android.popularmovies.utilities;
 
+import android.util.Log;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -24,6 +26,9 @@ public final class NetworkUtils {
         String url = BASE_URL;
         url += desiredCategory.equals("popular") ? POPULAR_CATEGORY : TOP_RATED_CATEGORY;
         url += API_KEY;
+
+        Log.d("NETWORK_UTILS", "URL returned by cateoryBuilder: " + url);
+
         return url;
     }
     public static String posterBuilder(String path){
@@ -39,6 +44,8 @@ public final class NetworkUtils {
         try{
             URL popularMovie = new URL(NetworkUtils.categoryBuilder(POPULAR_CATEGORY));
             response = getHTTPResponse(popularMovie);
+
+            Log.d("NETWORKING", "Data retrieved by movieData: " + response);
         }
         catch(Exception e) { e.printStackTrace(); }
         return response;
@@ -47,6 +54,10 @@ public final class NetworkUtils {
     //TODO JSON response is incorrect (not actually responding)
     public static String getHTTPResponse(URL url) throws IOException {
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+        Log.i("NETWORKING", "URL to be used by getHTTPResponse: " + (url.toString()));
+        Log.i("NETWORKING", "HTTPResponse given by getHTTPResponse: " + (connection.toString()));
+
         try {
             InputStream input = connection.getInputStream();
             Scanner in = new Scanner(input);

@@ -27,31 +27,20 @@ import java.util.ArrayList;
 
 //TODO FOCUS ON GETTING POSTERS DISPLAYED. POSSIBLY FIX ADAPTER
 public class MainActivity extends AppCompatActivity{
-    GridView movieDisplays;
-    TextView errorMessage;
-    ProgressBar progressBar;
-    ImageView moviePoster;
-    ArrayList<String> movieData = new ArrayList<>();
-    MovieAdapter movieAdapter;
+    private GridView movieDisplays;
+    private ProgressBar progressBar;
+    private ImageView moviePoster;
+    private ArrayList<String> movieData = new ArrayList<>();
+    private MovieAdapter movieAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         movieDisplays = (GridView) findViewById(R.id.gv_movieData);
-        errorMessage = (TextView) findViewById(R.id.tv_error);
         progressBar = (ProgressBar) findViewById(R.id.pb_loadingBar);
         moviePoster = (ImageView) findViewById(R.id.iv_moviePoster);
 
-        //TODO should be in AsyncTask
-//        String jsonResponse = NetworkUtils.moiveData();
-//        try { movieData = MovieJSONUtils.getSimpleMovieData(jsonResponse); }
-//        catch (JSONException e){ e.printStackTrace(); }
-//
-//        movieAdapter = new MovieAdapter(this, R.id.gv_movieData, movieData);
-//        movieAdapter.setData(movieData);
-//
-//        movieDisplays.setAdapter(movieAdapter);
         /*movieDisplays.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,12 +57,6 @@ public class MainActivity extends AppCompatActivity{
     }
     void showMovieDataView(){
         movieDisplays.setVisibility(View.VISIBLE);
-        errorMessage.setVisibility(View.INVISIBLE);
-    }
-    //TODO ERROR IS CRASHING APP. MAY JUST REMOVE
-    void showErrorMessage(){
-        movieDisplays.setVisibility(View.INVISIBLE);
-        errorMessage.setVisibility(View.VISIBLE);
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -103,6 +86,9 @@ public class MainActivity extends AppCompatActivity{
         protected String[] doInBackground(String... params) {
             if(params.length == 0) return null;
             String desired = params[0];
+
+            Log.i("MAINACT", "desired in doInBackground(): " + desired);
+
             try {
                 URL popularMovie = new URL(NetworkUtils.categoryBuilder(desired));
                 String response = NetworkUtils.getHTTPResponse(popularMovie);
