@@ -38,7 +38,6 @@ public final class NetworkUtils {
         return BASE_MOVIE_PATH + id + API_KEY;
     }
 
-    //TODO NOT RETURNING THE CORRECT JSON DATA???
     public static String moiveData() {
         String response = "";
         try{
@@ -51,20 +50,26 @@ public final class NetworkUtils {
         return response;
     }
 
-    //TODO JSON response is incorrect (not actually responding)
     public static String getHTTPResponse(URL url) throws IOException {
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
         Log.i("NETWORKING", "URL to be used by getHTTPResponse: " + (url.toString()));
         Log.i("NETWORKING", "HTTPResponse given by getHTTPResponse: " + (connection.toString()));
 
+        String response, inputRead = null;
         try {
             InputStream input = connection.getInputStream();
+
+            Log.i("NETWORKING", input.toString());
+
             Scanner in = new Scanner(input);
             in.useDelimiter("\\A");
-
-            if (in.hasNext()) return in.next();
-            else return null;
+            if (in.hasNext()) {
+                inputRead = in.next();
+            }
+            response = inputRead;
+            Log.i("NETWORKING", response);
+            return response;
         } finally {
             connection.disconnect();
         }

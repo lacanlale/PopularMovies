@@ -1,5 +1,7 @@
 package com.example.android.popularmovies.utilities;
 
+import android.util.Log;
+
 import com.example.android.popularmovies.Movie;
 
 import org.json.JSONArray;
@@ -12,10 +14,11 @@ import java.util.ArrayList;
  * Created by Jonathan on 6/5/2017.
  * include methods to get movie data
  * Current issue is most likely with API reader. Fix JSON utils class
+ * TODO JSON OFFICIALLY WORKING PROPERLY AS OF 6/30
  */
 public class MovieJSONUtils {
     public static ArrayList<String> getSimpleMovieData(String movieJSONstr) throws JSONException {
-        Movie[] movieData = details(movieJSONstr);
+        Movie[] movieData = getMovieDetails(movieJSONstr);
 
         ArrayList<String> parsedData = new ArrayList<>();
         for(Movie m : movieData){
@@ -52,7 +55,9 @@ public class MovieJSONUtils {
      * @return returns data (in string[] format) of movies
      * @throws JSONException
      */
-    private static Movie[] details(String movieJSONstr) throws JSONException {
+    public static Movie[] getMovieDetails(String movieJSONstr) throws JSONException {
+        Log.i("JSON", "Parameter caught: " + movieJSONstr);
+
         JSONObject movieJSON = new JSONObject(movieJSONstr);
         JSONArray movieArray = movieJSON.getJSONArray("results");
 
@@ -67,31 +72,45 @@ public class MovieJSONUtils {
             String movieTitle = movie.getString("title");
             String movieReleaseDate = movie.getString("release_date");
 
+            Log.i("JSON", "Poster: " + movie.getString("poster_path"));
+            Log.i("JSON", "Overview: " + movie.getString("overview"));
+            Log.i("JSON", "Vote Average: " + movie.getString("vote_average"));
+            Log.i("JSON", "Title: " + movie.getString("title"));
+            Log.i("JSON", "Release Date: " + movie.getString("release_date"));
+
             Movie data = new Movie(id, moviePoster, movieTitle, movieRating, movieReleaseDate, movieOverview);
 
             parsedData[x] = data;
         }
         return parsedData;
     }
-
-    public static String[] getMovieDetails(String movieJSONstr) throws JSONException {
-        JSONObject movieJSON = new JSONObject(movieJSONstr);
-        JSONArray movieArray = movieJSON.getJSONArray("results");
-
-        String[] parsedData = new String[movieArray.length()];
-        for (int x = 0; x < movieArray.length(); x++) {
-            JSONObject movie = movieArray.getJSONObject(x);
-
-            String movieOverview = movie.getString("overview");
-            String movieRating = movie.getString("vote_average");
-            String movieTitle = movie.getString("title");
-            String movieReleaseDate = movie.getString("release_date");
-
-            parsedData[x] = ("Title: " + movieTitle +
-                    "\nRating: " + movieRating +
-                    "\nOverview: " + movieOverview +
-                    "\nRelease Date: " + movieReleaseDate);
-        }
-        return parsedData;
-    }
+//    public static String[] getMovieDetails(String movieJSONstr) throws JSONException {
+//        JSONObject movieJSON = new JSONObject(movieJSONstr);
+//        JSONArray movieArray = movieJSON.getJSONArray("results");
+//
+//        String[] parsedData = new String[movieArray.length()];
+//        for (int x = 0; x < movieArray.length(); x++) {
+//            JSONObject movie = movieArray.getJSONObject(x);
+//
+//            int id = movie.getInt("id");
+//            String moviePoster = movie.getString("poster_path");
+//            String movieOverview = movie.getString("overview");
+//            String movieRating = movie.getString("vote_average");
+//            String movieTitle = movie.getString("title");
+//            String movieReleaseDate = movie.getString("release_date");
+//
+//            Log.i("JSON", "Poster: " + movie.getString("poster_path"));
+//            Log.i("JSON", "Overview: " + movie.getString("overview"));
+//            Log.i("JSON", "Vote Average: " + movie.getString("vote_average"));
+//            Log.i("JSON", "Title: " + movie.getString("title"));
+//            Log.i("JSON", "Release Date: " + movie.getString("release_date"));
+//
+//            parsedData[x] = (
+//                    "Title: " + movieTitle +
+//                    "\nRating: " + movieRating +
+//                    "\nOverview: " + movieOverview +
+//                    "\nRelease Date: " + movieReleaseDate);
+//        }
+//        return parsedData;
+//    }
 }

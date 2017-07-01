@@ -34,6 +34,8 @@ public class MainActivity extends AppCompatActivity{
     private MovieAdapter movieAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.i("MAINACT", "--Beginning--");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -69,7 +71,7 @@ public class MainActivity extends AppCompatActivity{
         return super.onOptionsItemSelected(item);
     }
 
-    private class FetchMovieTask extends AsyncTask<String, Void, String[]> {
+    private class FetchMovieTask extends AsyncTask<String, Void, Movie[]> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -83,18 +85,24 @@ public class MainActivity extends AppCompatActivity{
             }
         }
         @Override
-        protected String[] doInBackground(String... params) {
+        protected Movie[] doInBackground(String... params) {
             if(params.length == 0) return null;
             String desired = params[0];
 
             Log.i("MAINACT", "desired in doInBackground(): " + desired);
-
             try {
+                Log.d("stupid", "try/catch tree entered");
                 URL popularMovie = new URL(NetworkUtils.categoryBuilder(desired));
+                Log.d("stupid", "URL initialized: " + popularMovie.toString());
                 String response = NetworkUtils.getHTTPResponse(popularMovie);
+                Log.d("stupid", "response: " + response);
+
+                Log.i("MAINACT", "Response in doInBackground(): " + response);
+
                 return MovieJSONUtils.getMovieDetails(response);
             }
             catch(Exception e){
+                Log.d("stupid", "Exception: " + e);
                 e.printStackTrace();
                 return null;
             }
