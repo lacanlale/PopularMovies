@@ -43,6 +43,15 @@ public class MainActivity extends AppCompatActivity{
         progressBar = (ProgressBar) findViewById(R.id.pb_loadingBar);
         moviePoster = (ImageView) findViewById(R.id.iv_moviePoster);
 
+        String movieJSONstr = NetworkUtils.moiveData();
+        Log.d("MAINACT", "To be passed: " + movieJSONstr);
+        try {
+            movieData = MovieJSONUtils.getSimpleMovieData(movieJSONstr);
+            Log.d("MAINACT", "Data initialized");
+        }
+        catch(Exception e){
+            Log.d("MAINACT", "onCreate Exception: " + e);
+        }
         /*movieDisplays.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,11 +100,8 @@ public class MainActivity extends AppCompatActivity{
 
             Log.i("MAINACT", "desired in doInBackground(): " + desired);
             try {
-                Log.d("stupid", "try/catch tree entered");
                 URL popularMovie = new URL(NetworkUtils.categoryBuilder(desired));
-                Log.d("stupid", "URL initialized: " + popularMovie.toString());
                 String response = NetworkUtils.getHTTPResponse(popularMovie);
-                Log.d("stupid", "response: " + response);
 
                 Log.i("MAINACT", "Response in doInBackground(): " + response);
 

@@ -18,8 +18,10 @@ import java.util.ArrayList;
  */
 public class MovieJSONUtils {
     public static ArrayList<String> getSimpleMovieData(String movieJSONstr) throws JSONException {
+        Log.d("simple", "I made it here");
+        Log.d("simple", "This is what I'll pass: " + movieJSONstr);
         Movie[] movieData = getMovieDetails(movieJSONstr);
-
+        Log.d("simple", "and here");
         ArrayList<String> parsedData = new ArrayList<>();
         for(Movie m : movieData){
             parsedData.add(m.getmPoster());
@@ -72,6 +74,8 @@ public class MovieJSONUtils {
             String movieTitle = movie.getString("title");
             String movieReleaseDate = movie.getString("release_date");
 
+            Log.i("JSON", "Movie #" + x);
+            Log.i("JSON", "ID: " + id);
             Log.i("JSON", "Poster: " + movie.getString("poster_path"));
             Log.i("JSON", "Overview: " + movie.getString("overview"));
             Log.i("JSON", "Vote Average: " + movie.getString("vote_average"));
@@ -84,33 +88,4 @@ public class MovieJSONUtils {
         }
         return parsedData;
     }
-//    public static String[] getMovieDetails(String movieJSONstr) throws JSONException {
-//        JSONObject movieJSON = new JSONObject(movieJSONstr);
-//        JSONArray movieArray = movieJSON.getJSONArray("results");
-//
-//        String[] parsedData = new String[movieArray.length()];
-//        for (int x = 0; x < movieArray.length(); x++) {
-//            JSONObject movie = movieArray.getJSONObject(x);
-//
-//            int id = movie.getInt("id");
-//            String moviePoster = movie.getString("poster_path");
-//            String movieOverview = movie.getString("overview");
-//            String movieRating = movie.getString("vote_average");
-//            String movieTitle = movie.getString("title");
-//            String movieReleaseDate = movie.getString("release_date");
-//
-//            Log.i("JSON", "Poster: " + movie.getString("poster_path"));
-//            Log.i("JSON", "Overview: " + movie.getString("overview"));
-//            Log.i("JSON", "Vote Average: " + movie.getString("vote_average"));
-//            Log.i("JSON", "Title: " + movie.getString("title"));
-//            Log.i("JSON", "Release Date: " + movie.getString("release_date"));
-//
-//            parsedData[x] = (
-//                    "Title: " + movieTitle +
-//                    "\nRating: " + movieRating +
-//                    "\nOverview: " + movieOverview +
-//                    "\nRelease Date: " + movieReleaseDate);
-//        }
-//        return parsedData;
-//    }
 }

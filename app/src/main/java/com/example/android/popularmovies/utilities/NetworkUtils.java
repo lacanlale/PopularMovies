@@ -11,7 +11,6 @@ import java.util.Scanner;
 /**
  * Created by Jonathan on 6/2/2017.
  * API KEY IS NOT SHOWN FOR LEGALITY REASONS
- * TODO Data thats being accessed isn't whats needed. The issue is that NOTHING is recieved, so we're returning virtually nothing
  */
 
 public final class NetworkUtils {
@@ -38,13 +37,15 @@ public final class NetworkUtils {
         return BASE_MOVIE_PATH + id + API_KEY;
     }
 
+    //TODO movieData doesnt reach all of getHTTPREsponse?
     public static String moiveData() {
         String response = "";
         try{
             URL popularMovie = new URL(NetworkUtils.categoryBuilder(POPULAR_CATEGORY));
+            Log.d("movieData", "URL: " + popularMovie.toString());
             response = getHTTPResponse(popularMovie);
 
-            Log.d("NETWORKING", "Data retrieved by movieData: " + response);
+            Log.d("movieData", "Data retrieved by movieData: " + response);
         }
         catch(Exception e) { e.printStackTrace(); }
         return response;
