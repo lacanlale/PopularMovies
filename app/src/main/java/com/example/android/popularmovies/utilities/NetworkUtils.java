@@ -37,8 +37,7 @@ public final class NetworkUtils {
         return BASE_MOVIE_PATH + id + API_KEY;
     }
 
-    //TODO movieData doesnt reach all of getHTTPREsponse?
-    public static String moiveData() {
+    public static String movieData() {
         String response = "";
         try{
             URL popularMovie = new URL(NetworkUtils.categoryBuilder(POPULAR_CATEGORY));
@@ -47,7 +46,10 @@ public final class NetworkUtils {
 
             Log.d("movieData", "Data retrieved by movieData: " + response);
         }
-        catch(Exception e) { e.printStackTrace(); }
+        catch(Exception e) {
+            Log.d("movieData", e.toString());
+            e.printStackTrace();
+        }
         return response;
     }
 
@@ -57,12 +59,11 @@ public final class NetworkUtils {
         Log.i("NETWORKING", "URL to be used by getHTTPResponse: " + (url.toString()));
         Log.i("NETWORKING", "HTTPResponse given by getHTTPResponse: " + (connection.toString()));
 
+        InputStream input = connection.getInputStream();
+        Log.i("NETWORKING", input.toString());
+
         String response, inputRead = null;
         try {
-            InputStream input = connection.getInputStream();
-
-            Log.i("NETWORKING", input.toString());
-
             Scanner in = new Scanner(input);
             in.useDelimiter("\\A");
             if (in.hasNext()) {

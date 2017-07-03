@@ -20,8 +20,11 @@ public class MovieJSONUtils {
     public static ArrayList<String> getSimpleMovieData(String movieJSONstr) throws JSONException {
         Log.d("simple", "I made it here");
         Log.d("simple", "This is what I'll pass: " + movieJSONstr);
+
         Movie[] movieData = getMovieDetails(movieJSONstr);
+
         Log.d("simple", "and here");
+
         ArrayList<String> parsedData = new ArrayList<>();
         for(Movie m : movieData){
             parsedData.add(m.getmPoster());
