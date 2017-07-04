@@ -14,16 +14,10 @@ import java.util.ArrayList;
  * Created by Jonathan on 6/5/2017.
  * include methods to get movie data
  * Current issue is most likely with API reader. Fix JSON utils class
- * TODO JSON OFFICIALLY WORKING PROPERLY AS OF 6/30
  */
 public class MovieJSONUtils {
     public static ArrayList<String> getSimpleMovieData(String movieJSONstr) throws JSONException {
-        Log.d("simple", "I made it here");
-        Log.d("simple", "This is what I'll pass: " + movieJSONstr);
-
         Movie[] movieData = getMovieDetails(movieJSONstr);
-
-        Log.d("simple", "and here");
 
         ArrayList<String> parsedData = new ArrayList<>();
         for(Movie m : movieData){

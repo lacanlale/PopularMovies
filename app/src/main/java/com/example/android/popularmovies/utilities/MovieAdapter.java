@@ -3,9 +3,6 @@ package com.example.android.popularmovies.utilities;
 import android.app.Activity;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
-import android.net.Network;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,8 +12,6 @@ import android.widget.ImageView;
 
 import com.example.android.popularmovies.R;
 import com.squareup.picasso.Picasso;
-
-import org.json.JSONException;
 
 import java.util.ArrayList;
 /**
@@ -36,29 +31,35 @@ public class MovieAdapter extends ArrayAdapter<String>{
         mData = data;
     }
 
-    public void setData(ArrayList<String> mGridData)
-    {
+    public void setData(ArrayList<String> mGridData) {
+        Log.i("ADAPTER", mGridData.toString());
+        Log.i("ADAPTER", "data changed");
         mData=mGridData;
         notifyDataSetChanged();
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View row = convertView;
+        Log.i("ADAPTER", "getView");
+        View view = convertView;
         ImageView image = null;
 
-        if (row == null) {
+        if (view == null) {
             LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
-            row = inflater.inflate(mLayoutResourceId, parent, false);
-            image = (ImageView) row.findViewById(R.id.iv_moviePoster);
-            row.setTag(image);
+            view = inflater.inflate(mLayoutResourceId, parent, false);
+            image = (ImageView) view.findViewById(R.id.iv_moviePoster);
+            view.setTag(image);
         }
         try {
+            String poster = NetworkUtils.posterBuilder(mData.get(position));
+
+            Log.i("ADAPTER", poster);
+
             Picasso.with(mContext).
-                    load(NetworkUtils.posterBuilder(mData.get(position))).
+                    load(poster).
                     into(image);
         }
         catch(NullPointerException e) { e.printStackTrace(); }
-        return row;
+        return view;
     }
 }
