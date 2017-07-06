@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity{
         movieDisplays = (GridView) findViewById(R.id.gv_movieData);
         progressBar = (ProgressBar) findViewById(R.id.pb_loadingBar);
         moviePoster = (ImageView) findViewById(R.id.iv_moviePoster);
-        movieAdapter = new MovieAdapter(this, R.id.gv_movieData, posterData);
+        movieAdapter = new MovieAdapter(this, R.layout.activity_main, posterData);
         /*movieDisplays.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
