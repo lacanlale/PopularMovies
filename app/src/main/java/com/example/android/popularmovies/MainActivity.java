@@ -8,7 +8,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.example.android.popularmovies.data.MoviePreferences;
@@ -16,14 +15,11 @@ import com.example.android.popularmovies.utilities.MovieAdapter;
 import com.example.android.popularmovies.utilities.MovieJSONUtils;
 import com.example.android.popularmovies.utilities.NetworkUtils;
 
-import java.net.URL;
 import java.util.ArrayList;
 
-//TODO FOCUS ON GETTING POSTERS DISPLAYED. POSSIBLY FIX ADAPTER
 public class MainActivity extends AppCompatActivity{
     private GridView movieDisplays;
-    private ProgressBar progressBar;
-    private ImageView moviePoster;
+    //private ProgressBar progressBar;
     private MovieAdapter movieAdapter;
     private ArrayList<String> posterData = new ArrayList<>();
     @Override
@@ -32,9 +28,8 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
 
         movieDisplays = (GridView) findViewById(R.id.gv_movieData);
-        progressBar = (ProgressBar) findViewById(R.id.pb_loadingBar);
-        moviePoster = (ImageView) findViewById(R.id.iv_moviePoster);
-        movieAdapter = new MovieAdapter(this, R.layout.activity_main, posterData);
+      //  progressBar = (ProgressBar) findViewById(R.id.pb_loadingBar);
+        movieAdapter = new MovieAdapter(this, R.layout.movie_posters, posterData);
         /*movieDisplays.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,17 +50,14 @@ public class MainActivity extends AppCompatActivity{
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int movieId = item.getItemId();
-        if(movieId == R.id.action_refresh) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+        return movieId == R.id.action_refresh || super.onOptionsItemSelected(item);
     }
 
-    public class FetchMovieTask extends AsyncTask<String, Void, Movie[]> {
+    private class FetchMovieTask extends AsyncTask<String, Void, Movie[]> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressBar.setVisibility(View.VISIBLE);
+           // progressBar.setVisibility(View.VISIBLE);
         }
         @Override
         protected Movie[] doInBackground(String... params) {
@@ -85,6 +77,7 @@ public class MainActivity extends AppCompatActivity{
         protected void onPostExecute(Movie[] movies) {
             super.onPostExecute(movies);
             movieAdapter.setData(posterData);
+            //progressBar.setVisibility(View.INVISIBLE);
             movieDisplays.setAdapter(movieAdapter);
             showMovieDataView();
         }
