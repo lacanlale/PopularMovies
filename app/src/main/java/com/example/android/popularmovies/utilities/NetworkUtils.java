@@ -25,9 +25,6 @@ public final class NetworkUtils {
         String url = BASE_URL;
         url += desiredCategory.equals("popular") ? POPULAR_CATEGORY : TOP_RATED_CATEGORY;
         url += API_KEY;
-
-        Log.d("NETWORK_UTILS", "URL returned by cateoryBuilder: " + url);
-
         return url;
     }
     public static String posterBuilder(String path){
@@ -43,11 +40,8 @@ public final class NetworkUtils {
             URL popularMovie = new URL(NetworkUtils.categoryBuilder(POPULAR_CATEGORY));
             Log.d("movieData", "URL: " + popularMovie.toString());
             response = getHTTPResponse(popularMovie);
-
-            Log.d("movieData", "Data retrieved by movieData: " + response);
         }
         catch(Exception e) {
-            Log.d("movieData", e.toString());
             e.printStackTrace();
         }
         return response;
@@ -55,13 +49,7 @@ public final class NetworkUtils {
 
     public static String getHTTPResponse(URL url) throws IOException {
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-
-        Log.i("NETWORKING", "URL to be used by getHTTPResponse: " + (url.toString()));
-        Log.i("NETWORKING", "HTTPResponse given by getHTTPResponse: " + (connection.toString()));
-
         InputStream input = connection.getInputStream();
-        Log.i("NETWORKING", input.toString());
-
         String response, inputRead = null;
         try {
             Scanner in = new Scanner(input);
@@ -70,7 +58,6 @@ public final class NetworkUtils {
                 inputRead = in.next();
             }
             response = inputRead;
-            Log.i("NETWORKING", response);
             return response;
         } finally {
             connection.disconnect();

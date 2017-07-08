@@ -14,10 +14,4 @@
             android:horizontalSpacing="10dp"
             android:stretchMode="columnWidth"
             android:gravity="center" />
-    <!--<ProgressBar-->
-        <!--android:id="@+id/pb_loadingBar"-->
-        <!--android:layout_width="42dp"-->
-        <!--android:layout_height="42dp"-->
-        <!--android:layout_gravity="center"-->
-        <!--android:visibility="invisible"/>-->
 </LinearLayout>

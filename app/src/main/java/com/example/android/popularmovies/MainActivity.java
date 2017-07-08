@@ -19,7 +19,6 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity{
     private GridView movieDisplays;
-    //private ProgressBar progressBar;
     private MovieAdapter movieAdapter;
     private ArrayList<String> posterData = new ArrayList<>();
     @Override
@@ -28,7 +27,6 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
 
         movieDisplays = (GridView) findViewById(R.id.gv_movieData);
-      //  progressBar = (ProgressBar) findViewById(R.id.pb_loadingBar);
         movieAdapter = new MovieAdapter(this, R.layout.movie_posters, posterData);
         /*movieDisplays.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,7 +55,6 @@ public class MainActivity extends AppCompatActivity{
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-           // progressBar.setVisibility(View.VISIBLE);
         }
         @Override
         protected Movie[] doInBackground(String... params) {
@@ -77,9 +74,8 @@ public class MainActivity extends AppCompatActivity{
         protected void onPostExecute(Movie[] movies) {
             super.onPostExecute(movies);
             movieAdapter.setData(posterData);
-            //progressBar.setVisibility(View.INVISIBLE);
             movieDisplays.setAdapter(movieAdapter);
-            showMovieDataView();
+            //showMovieDataView();
         }
     }
 }

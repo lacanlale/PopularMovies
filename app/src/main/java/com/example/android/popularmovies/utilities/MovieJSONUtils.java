@@ -71,14 +71,6 @@ public class MovieJSONUtils {
             String movieTitle = movie.getString("title");
             String movieReleaseDate = movie.getString("release_date");
 
-            Log.i("JSON", "Movie #" + x);
-            Log.i("JSON", "ID: " + id);
-            Log.i("JSON", "Poster: " + movie.getString("poster_path"));
-            Log.i("JSON", "Overview: " + movie.getString("overview"));
-            Log.i("JSON", "Vote Average: " + movie.getString("vote_average"));
-            Log.i("JSON", "Title: " + movie.getString("title"));
-            Log.i("JSON", "Release Date: " + movie.getString("release_date"));
-
             Movie data = new Movie(id, moviePoster, movieTitle, movieRating, movieReleaseDate, movieOverview);
 
             parsedData[x] = data;

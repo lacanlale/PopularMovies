@@ -20,9 +20,10 @@ import java.util.ArrayList;
  */
 
 public class MovieAdapter extends ArrayAdapter<String>{
-    Context mContext;
-    int mLayoutResourceId;
-    ArrayList<String> mData = new ArrayList<>();
+    private Context mContext;
+    private int mLayoutResourceId;
+    private ArrayList<String> mData = new ArrayList<>();
+    private LayoutInflater inflater;
 
     public MovieAdapter(Context context, int layoutResourceId,
                                  ArrayList<String> data) {
@@ -30,6 +31,8 @@ public class MovieAdapter extends ArrayAdapter<String>{
         mLayoutResourceId = layoutResourceId;
         mContext = context;
         mData = data;
+        inflater = ( LayoutInflater )mContext.
+                getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     public void setData(ArrayList<String> mGridData) {
@@ -40,19 +43,18 @@ public class MovieAdapter extends ArrayAdapter<String>{
     //TODO code is working. Posters arent displayed :(
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
-        convertView = inflater.inflate(mLayoutResourceId, parent, false);
+        //inflater = ((Activity) mContext).getLayoutInflater();
+        convertView = inflater.inflate(mLayoutResourceId, null);
         ImageView image = (ImageView) convertView.findViewById(R.id.iv_moviePoster);
         convertView.setTag(image);
         try {
             String poster = NetworkUtils.posterBuilder(mData.get(position));
-
             Picasso.with(mContext).
                     load(poster).
                     into(image);
         }
         catch(NullPointerException e) { e.printStackTrace(); }
-        return convertView;
+        return image;
     }
 
     @Override
