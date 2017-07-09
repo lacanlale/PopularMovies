@@ -1,5 +1,7 @@
 package com.example.android.popularmovies;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,9 +10,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.GridView;
-import android.widget.ProgressBar;
 
 import com.example.android.popularmovies.data.MoviePreferences;
+import com.example.android.popularmovies.utilities.DetailActivity;
 import com.example.android.popularmovies.utilities.MovieAdapter;
 import com.example.android.popularmovies.utilities.MovieJSONUtils;
 import com.example.android.popularmovies.utilities.NetworkUtils;
@@ -28,22 +30,13 @@ public class MainActivity extends AppCompatActivity{
 
         movieDisplays = (GridView) findViewById(R.id.gv_movieData);
         movieAdapter = new MovieAdapter(this, R.layout.movie_posters, posterData);
-        /*movieDisplays.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intentForMovieInfo = new Intent(MainActivity.this, DetailActivity.class);
-                startActivity(intentForMovieInfo);
-            }
-        });*/
+
         new FetchMovieTask().execute(MoviePreferences.getPreferredCategory());
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.movies, menu);
         return true;
-    }
-    void showMovieDataView(){
-        movieDisplays.setVisibility(View.VISIBLE);
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -75,7 +68,6 @@ public class MainActivity extends AppCompatActivity{
             super.onPostExecute(movies);
             movieAdapter.setData(posterData);
             movieDisplays.setAdapter(movieAdapter);
-            //showMovieDataView();
         }
     }
 }

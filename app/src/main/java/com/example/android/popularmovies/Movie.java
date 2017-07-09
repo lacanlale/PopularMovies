@@ -1,7 +1,5 @@
 package com.example.android.popularmovies;
 
-import android.os.Parcelable;
-
 /**
  * Created by Jonathan on 6/18/2017.
  */

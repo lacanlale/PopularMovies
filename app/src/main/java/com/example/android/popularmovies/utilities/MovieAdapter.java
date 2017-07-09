@@ -1,7 +1,5 @@
 package com.example.android.popularmovies.utilities;
 
-import android.app.Activity;
-
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -18,8 +16,8 @@ import java.util.ArrayList;
 /**
  * Created by Jonathan on 6/18/2017.
  */
-
-public class MovieAdapter extends ArrayAdapter<String>{
+//TODO implement onClick elements
+public class MovieAdapter extends ArrayAdapter<String> implements View.OnClickListener{
     private Context mContext;
     private int mLayoutResourceId;
     private ArrayList<String> mData = new ArrayList<>();
@@ -35,15 +33,19 @@ public class MovieAdapter extends ArrayAdapter<String>{
                 getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
+    //TODO finish
+    @Override
+    public void onClick(View v) {
+
+    }
+
     public void setData(ArrayList<String> mGridData) {
         mData=mGridData;
         notifyDataSetChanged();
     }
 
-    //TODO code is working. Posters arent displayed :(
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        //inflater = ((Activity) mContext).getLayoutInflater();
         convertView = inflater.inflate(mLayoutResourceId, null);
         ImageView image = (ImageView) convertView.findViewById(R.id.iv_moviePoster);
         convertView.setTag(image);

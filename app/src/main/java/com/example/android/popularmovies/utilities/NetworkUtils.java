@@ -18,7 +18,7 @@ public final class NetworkUtils {
     private final static String API_KEY = "?api_key=";
     private final static String POPULAR_CATEGORY = "popular";
     private final static String TOP_RATED_CATEGORY = "top_rated";
-    private final static String BASE_IMAGE_PATH = "image.tmdb.org/t/p/w640/";
+    private final static String BASE_IMAGE_PATH = "https://image.tmdb.org/t/p/w640/";
     private final static String BASE_MOVIE_PATH = "https://api.themoviedb.org/3/movie/";
 
     public static String categoryBuilder(String desiredCategory) {
