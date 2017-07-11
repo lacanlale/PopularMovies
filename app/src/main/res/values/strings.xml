@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Popular Movies</string>
     <string name="button">Refresh</string>
+    <string name="details">Movie Details</string>
 </resources>

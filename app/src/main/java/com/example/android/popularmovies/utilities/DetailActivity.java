@@ -16,14 +16,11 @@ import java.net.URL;
  * the title, rating, release date, and overview
  */
 public class DetailActivity extends AppCompatActivity {
-    String detailedInformation;
     TextView movieInfo;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-
         movieInfo = (TextView) findViewById(R.id.tv_movieInfo);
     }
 }

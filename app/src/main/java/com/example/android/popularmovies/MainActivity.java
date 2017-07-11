@@ -1,6 +1,5 @@
 package com.example.android.popularmovies;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -19,7 +18,7 @@ import com.example.android.popularmovies.utilities.NetworkUtils;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private GridView movieDisplays;
     private MovieAdapter movieAdapter;
     private ArrayList<String> posterData = new ArrayList<>();
@@ -30,9 +29,17 @@ public class MainActivity extends AppCompatActivity{
 
         movieDisplays = (GridView) findViewById(R.id.gv_movieData);
         movieAdapter = new MovieAdapter(this, R.layout.movie_posters, posterData);
+        movieDisplays.setOnClickListener(this);
 
         new FetchMovieTask().execute(MoviePreferences.getPreferredCategory());
     }
+
+    @Override
+    public void onClick(View v) {
+        Intent intentToStartDetailActivity = new Intent(this, DetailActivity.class);
+        startActivity(intentToStartDetailActivity);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.movies, menu);

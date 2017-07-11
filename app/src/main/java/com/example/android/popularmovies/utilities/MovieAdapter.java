@@ -2,7 +2,6 @@ package com.example.android.popularmovies.utilities;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +14,9 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 /**
  * Created by Jonathan on 6/18/2017.
+ * Adapter for displaying movie posters to gridView
  */
-//TODO implement onClick elements
-public class MovieAdapter extends ArrayAdapter<String> implements View.OnClickListener{
+public class MovieAdapter extends ArrayAdapter<String>{
     private Context mContext;
     private int mLayoutResourceId;
     private ArrayList<String> mData = new ArrayList<>();
@@ -31,12 +30,6 @@ public class MovieAdapter extends ArrayAdapter<String> implements View.OnClickLi
         mData = data;
         inflater = ( LayoutInflater )mContext.
                 getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    }
-
-    //TODO finish
-    @Override
-    public void onClick(View v) {
-
     }
 
     public void setData(ArrayList<String> mGridData) {
