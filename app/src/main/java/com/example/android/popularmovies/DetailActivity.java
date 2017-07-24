@@ -1,13 +1,10 @@
-package com.example.android.popularmovies.utilities;
+package com.example.android.popularmovies;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
 import android.widget.TextView;
 
-import com.example.android.popularmovies.R;
-import com.example.android.popularmovies.data.MoviePreferences;
-
-import java.net.URL;
 //TODO Class still needs to be finished
 
 /**
@@ -22,5 +19,11 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         movieInfo = (TextView) findViewById(R.id.tv_movieInfo);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.layout, menu);
+        return true;
     }
 }

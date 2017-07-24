@@ -40,7 +40,7 @@ public class MovieAdapter extends ArrayAdapter<String>{
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         convertView = inflater.inflate(mLayoutResourceId, null);
-        ImageView image = (ImageView) convertView.findViewById(R.id.iv_moviePoster);
+        ImageView image = (ImageView) convertView.findViewById(R.id.ib_moviePoster);
         convertView.setTag(image);
         try {
             String poster = NetworkUtils.posterBuilder(mData.get(position));

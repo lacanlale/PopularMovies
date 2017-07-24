@@ -4,14 +4,13 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.GridView;
+import android.widget.ImageButton;
 
 import com.example.android.popularmovies.data.MoviePreferences;
-import com.example.android.popularmovies.utilities.DetailActivity;
 import com.example.android.popularmovies.utilities.MovieAdapter;
 import com.example.android.popularmovies.utilities.MovieJSONUtils;
 import com.example.android.popularmovies.utilities.NetworkUtils;
@@ -22,6 +21,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private GridView movieDisplays;
     private MovieAdapter movieAdapter;
     private ArrayList<String> posterData = new ArrayList<>();
+    private ImageButton movieButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,14 +29,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         movieDisplays = (GridView) findViewById(R.id.gv_movieData);
         movieAdapter = new MovieAdapter(this, R.layout.movie_posters, posterData);
-        movieDisplays.setOnClickListener(this);
+        movieButton = (ImageButton) findViewById(R.id.ib_moviePoster);
+
+        movieButton.setOnClickListener(this);
 
         new FetchMovieTask().execute(MoviePreferences.getPreferredCategory());
     }
 
     @Override
     public void onClick(View v) {
-        Intent intentToStartDetailActivity = new Intent(this, DetailActivity.class);
+        Intent intentToStartDetailActivity = new Intent(MainActivity.this, DetailActivity.class);
         startActivity(intentToStartDetailActivity);
     }
 
