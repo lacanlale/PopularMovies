@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         movieAdapter = new MovieAdapter(this, R.layout.movie_posters, posterData);
         movieButton = (ImageButton) findViewById(R.id.ib_moviePoster);
 
+        //TODO currently causes crash
         movieButton.setOnClickListener(this);
 
         new FetchMovieTask().execute(MoviePreferences.getPreferredCategory());
@@ -46,11 +47,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.movies, menu);
         return true;
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int movieId = item.getItemId();
-        return movieId == R.id.action_refresh || super.onOptionsItemSelected(item);
     }
 
     private class FetchMovieTask extends AsyncTask<String, Void, Movie[]> {
