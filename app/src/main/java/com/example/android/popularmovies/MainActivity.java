@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         movieButton = (ImageButton) findViewById(R.id.ib_moviePoster);
 
         //TODO currently causes crash
-        movieButton.setOnClickListener(this);
+        //movieButton.setOnClickListener(this);
 
         new FetchMovieTask().execute(MoviePreferences.getPreferredCategory());
     }

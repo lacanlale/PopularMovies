@@ -1,15 +1,20 @@
 package com.example.android.popularmovies.utilities;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.example.android.popularmovies.R;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.util.ArrayList;
 /**
@@ -21,6 +26,7 @@ public class MovieAdapter extends ArrayAdapter<String>{
     private int mLayoutResourceId;
     private ArrayList<String> mData = new ArrayList<>();
     private LayoutInflater inflater;
+    private Target target;
 
     public MovieAdapter(Context context, int layoutResourceId,
                                  ArrayList<String> data) {
@@ -39,17 +45,35 @@ public class MovieAdapter extends ArrayAdapter<String>{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        convertView = inflater.inflate(mLayoutResourceId, null);
-        ImageView image = (ImageView) convertView.findViewById(R.id.ib_moviePoster);
-        convertView.setTag(image);
+        convertView = inflater.inflate(mLayoutResourceId, parent, false);
+        final ImageButton imageButton = (ImageButton) convertView.findViewById(R.id.ib_moviePoster);
+        convertView.setTag(imageButton);
+
+        if(target == null){
+             target = new Target() {
+                @Override
+                public void onBitmapFailed(Drawable arg0) {
+                }
+
+                @Override
+                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                    imageButton.setBackgroundDrawable(new BitmapDrawable(bitmap));
+                }
+
+                @Override
+                public void onPrepareLoad(Drawable arg0) {
+                }
+            };
+        }
+
         try {
             String poster = NetworkUtils.posterBuilder(mData.get(position));
             Picasso.with(mContext).
                     load(poster).
-                    into(image);
+                    into(target);
         }
         catch(NullPointerException e) { e.printStackTrace(); }
-        return image;
+        return imageButton;
     }
 
     @Override
