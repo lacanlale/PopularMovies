@@ -7,23 +7,28 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.android.popularmovies.R;
 import com.squareup.picasso.Picasso;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
+
 /**
- * Created by Jonathan on 6/18/2017.
- * Adapter for displaying movie posters to gridView
+ * Created by Jonathan on 7/30/2017.
+ * Adapter used for Movie Details
  */
-public class MovieAdapter extends ArrayAdapter<String>{
+
+public class MovieDetailsAdapter extends ArrayAdapter<String> {
     private Context mContext;
     private int mLayoutResourceId;
     private ArrayList<String> mData = new ArrayList<>();
     private LayoutInflater inflater;
 
-    public MovieAdapter(Context context, int layoutResourceId,
-                                 ArrayList<String> data) {
+    public MovieDetailsAdapter(Context context, int layoutResourceId,
+                               ArrayList<String> data) {
         super(context, layoutResourceId, data);
         mLayoutResourceId = layoutResourceId;
         mContext = context;
@@ -40,16 +45,9 @@ public class MovieAdapter extends ArrayAdapter<String>{
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         convertView = inflater.inflate(mLayoutResourceId, parent, false);
-        ImageView imageButton = (ImageView) convertView.findViewById(R.id.iv_moviePoster);
-        convertView.setTag(imageButton);
-        try {
-            String poster = NetworkUtils.posterBuilder(mData.get(position));
-            Picasso.with(mContext).
-                    load(poster).
-                    into(imageButton);
-        }
-        catch(NullPointerException e) { e.printStackTrace(); }
-        return imageButton;
+        TextView movieDetails = (TextView) convertView.findViewById(R.id.tv_movieInfo);
+        convertView.setTag(movieDetails);
+        return movieDetails;
     }
 
     @Override

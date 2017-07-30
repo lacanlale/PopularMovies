@@ -5,10 +5,9 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.GridView;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.example.android.popularmovies.data.MoviePreferences;
 import com.example.android.popularmovies.utilities.MovieAdapter;
@@ -21,7 +20,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private GridView movieDisplays;
     private MovieAdapter movieAdapter;
     private ArrayList<String> posterData = new ArrayList<>();
-    private ImageButton movieButton;
+    private ImageView movieButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +28,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         movieDisplays = (GridView) findViewById(R.id.gv_movieData);
         movieAdapter = new MovieAdapter(this, R.layout.movie_posters, posterData);
-        movieButton = (ImageButton) findViewById(R.id.ib_moviePoster);
+        movieButton = (ImageView) findViewById(R.id.iv_moviePoster);
 
         //TODO currently causes crash
         //movieButton.setOnClickListener(this);
@@ -54,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         protected void onPreExecute() {
             super.onPreExecute();
         }
+
         @Override
         protected Movie[] doInBackground(String... params) {
             if(params.length == 0) return null;

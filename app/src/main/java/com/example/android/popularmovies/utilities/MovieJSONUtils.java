@@ -32,7 +32,7 @@ public class MovieJSONUtils {
      * @return Details of a single Movie
      * @throws JSONException
      */
-    public static String getSingleMovie(String movieJSONstr) throws JSONException {
+    public static ArrayList<String> getSingleMovie(String movieJSONstr) throws JSONException {
         JSONObject movieJSON = new JSONObject(movieJSONstr);
 
         String movieOverview = movieJSON.getString("overview");
@@ -40,10 +40,11 @@ public class MovieJSONUtils {
         String movieTitle = movieJSON.getString("title");
         String movieReleaseDate = movieJSON.getString("release_date");
 
-        String parsedData = ("Title: " + movieTitle +
-                "\nRating: " + movieRating +
-                "\nOverview: " + movieOverview +
-                "\nRelease Date: " + movieReleaseDate);
+        ArrayList<String> parsedData = new ArrayList<>();
+        parsedData.add("Title: " + movieTitle);
+        parsedData.add("Rating: " + movieRating);
+        parsedData.add("Overview: " + movieOverview);
+        parsedData.add("Release Date: " + movieReleaseDate);
 
         return parsedData;
     }

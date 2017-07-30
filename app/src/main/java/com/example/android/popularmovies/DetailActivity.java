@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.widget.TextView;
 
 import com.example.android.popularmovies.data.MoviePreferences;
+import com.example.android.popularmovies.utilities.MovieDetailsAdapter;
 import com.example.android.popularmovies.utilities.MovieJSONUtils;
 import com.example.android.popularmovies.utilities.NetworkUtils;
 
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 public class DetailActivity extends AppCompatActivity {
     TextView movieInfo;
     ArrayList<String> movieDetails = new ArrayList<>();
+    MovieDetailsAdapter detailsAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +52,7 @@ public class DetailActivity extends AppCompatActivity {
             if(params.length == 0) return null;
             String response = NetworkUtils.movieData();
             try {
-                movieDetails = MovieJSONUtils.getSimpleMovieData(response);
+                movieDetails = MovieJSONUtils.getSingleMovie(response);
                 return MovieJSONUtils.getMovieDetails(response);
             }
             catch(Exception e){
@@ -62,6 +64,8 @@ public class DetailActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Movie[] movies) {
             super.onPostExecute(movies);
+            //detailsAdapter.setData(detailsData);
+            //movieInfo.setAdapter(detailsAdapter);
         }
     }
 }
