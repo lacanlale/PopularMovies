@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private GridView movieDisplays;
     private MovieAdapter movieAdapter;
-    private ArrayList<String> posterData = new ArrayList<>();
+    private Movie[] posterData;
     private ImageView movieButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,12 +30,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         movieAdapter = new MovieAdapter(this, R.layout.movie_posters, posterData);
         movieButton = (ImageView) findViewById(R.id.iv_moviePoster);
 
-        //TODO currently causes crash
-        //movieButton.setOnClickListener(this);
-
         new FetchMovieTask().execute(MoviePreferences.getPreferredCategory());
     }
 
+    //TODO store id in intent extra text
     @Override
     public void onClick(View v) {
         Intent intentToStartDetailActivity = new Intent(MainActivity.this, DetailActivity.class);
@@ -54,13 +52,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             super.onPreExecute();
         }
 
+        //TODO Possibly pass movie tags alongside poster data?
         @Override
         protected Movie[] doInBackground(String... params) {
             if(params.length == 0) return null;
             String response = NetworkUtils.movieData();
             try {
-                posterData = MovieJSONUtils.getSimpleMovieData(response);
-                return MovieJSONUtils.getMovieDetails(response);
+                posterData = MovieJSONUtils.getMovieDetails(response);
+                return posterData;
             }
             catch(Exception e){
                 e.printStackTrace();
@@ -71,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         protected void onPostExecute(Movie[] movies) {
             super.onPostExecute(movies);
-            movieAdapter.setData(posterData);
+            movieAdapter.setPosterData(posterData);
             movieDisplays.setAdapter(movieAdapter);
         }
     }

@@ -3,6 +3,7 @@ package com.example.android.popularmovies;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.widget.TextView;
 
@@ -31,6 +32,8 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         movieInfo = (TextView) findViewById(R.id.tv_movieInfo);
+
+        Log.d("DETAILS", getApplicationContext().toString());
 
         new FetchMovieDetails().execute(MoviePreferences.getPreferredCategory());
     }
