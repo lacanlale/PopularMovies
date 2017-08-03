@@ -17,7 +17,7 @@ import java.util.ArrayList;
  */
 public class MovieJSONUtils {
     public static ArrayList<String> getSimpleMovieData(String movieJSONstr) throws JSONException {
-        Movie[] movieData = getMovieDetails(movieJSONstr);
+        ArrayList<Movie> movieData = getMovieDetails(movieJSONstr);
 
         ArrayList<String> parsedData = new ArrayList<>();
         for(Movie m : movieData){
@@ -55,9 +55,30 @@ public class MovieJSONUtils {
      * @return returns data (in string[] format) of movies
      * @throws JSONException
      */
-    public static Movie[] getMovieDetails(String movieJSONstr) throws JSONException {
+    public static ArrayList<Movie> getMovieDetails(String movieJSONstr) throws JSONException {
         Log.i("JSON", "Parameter caught: " + movieJSONstr);
 
+        JSONObject movieJSON = new JSONObject(movieJSONstr);
+        JSONArray movieArray = movieJSON.getJSONArray("results");
+
+        ArrayList<Movie> parsedData = new ArrayList<>();
+        for (int x = 0; x < movieArray.length(); x++) {
+            JSONObject movie = movieArray.getJSONObject(x);
+
+            int id = movie.getInt("id");
+            String moviePoster = movie.getString("poster_path");
+            String movieOverview = movie.getString("overview");
+            String movieRating = movie.getString("vote_average");
+            String movieTitle = movie.getString("title");
+            String movieReleaseDate = movie.getString("release_date");
+
+            Movie data = new Movie(id, moviePoster, movieTitle, movieRating, movieReleaseDate, movieOverview);
+
+            parsedData.add(data);
+        }
+        return parsedData;
+    }
+    public static Movie[] getJSONMovieArray(String movieJSONstr) throws JSONException {
         JSONObject movieJSON = new JSONObject(movieJSONstr);
         JSONArray movieArray = movieJSON.getJSONArray("results");
 

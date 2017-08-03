@@ -56,7 +56,7 @@ public class DetailActivity extends AppCompatActivity {
             String response = NetworkUtils.movieData();
             try {
                 movieDetails = MovieJSONUtils.getSingleMovie(response);
-                return MovieJSONUtils.getMovieDetails(response);
+                return MovieJSONUtils.getJSONMovieArray(response);
             }
             catch(Exception e){
                 e.printStackTrace();

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.GridView;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private GridView movieDisplays;
     private MovieAdapter movieAdapter;
-    private Movie[] posterData;
+    private ArrayList<Movie> posterData;
     private ImageView movieButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,14 +53,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             super.onPreExecute();
         }
 
-        //TODO Possibly pass movie tags alongside poster data?
         @Override
         protected Movie[] doInBackground(String... params) {
             if(params.length == 0) return null;
             String response = NetworkUtils.movieData();
             try {
                 posterData = MovieJSONUtils.getMovieDetails(response);
-                return posterData;
+                Log.i("POSTERDATA", posterData.toString());
+                return MovieJSONUtils.getJSONMovieArray(response);
             }
             catch(Exception e){
                 e.printStackTrace();

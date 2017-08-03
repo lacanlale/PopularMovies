@@ -12,6 +12,8 @@ import com.example.android.popularmovies.Movie;
 import com.example.android.popularmovies.R;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+
 /**
  * Created by Jonathan on 6/18/2017.
  * Adapter for displaying movie posters to gridView
@@ -24,20 +26,23 @@ import com.squareup.picasso.Picasso;
 public class MovieAdapter extends ArrayAdapter<Movie>{
     private Context mContext;
     private int mLayoutResourceId;
-    private Movie[] mData;
+    private ArrayList<Movie> mData = new ArrayList<>();
     private LayoutInflater inflater;
 
     public MovieAdapter(Context context, int layoutResourceId,
-                                 Movie[] data) {
+                                 ArrayList<Movie> data) {
         super(context, layoutResourceId, data);
+        Log.d("POSTERDATA", "x");
         mLayoutResourceId = layoutResourceId;
+        Log.d("POSTERDATA", "x");
         mContext = context;
+        Log.d("POSTERDATA", "x");
         mData = data;
         inflater = ( LayoutInflater )mContext.
                 getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    public void setPosterData(Movie[] mGridData) {
+    public void setPosterData(ArrayList<Movie> mGridData) {
         mData=mGridData;
         notifyDataSetChanged();
     }
@@ -48,7 +53,7 @@ public class MovieAdapter extends ArrayAdapter<Movie>{
         ImageView imageButton = (ImageView) convertView.findViewById(R.id.iv_moviePoster);
         convertView.setTag(imageButton);
         try {
-            String poster = NetworkUtils.posterBuilder(mData[position].getmPoster());
+            String poster = NetworkUtils.posterBuilder(mData.get(position).getmPoster());
 
             Log.i("POSTERS", poster);
 
@@ -57,18 +62,18 @@ public class MovieAdapter extends ArrayAdapter<Movie>{
                     into(imageButton);
         }
         catch(NullPointerException e) { e.printStackTrace(); }
-        imageButton.setId(mData[position].getmId());
+        imageButton.setId(mData.get(position).getmId());
         return imageButton;
     }
 
     @Override
     public int getCount() {
-        return mData.length;
+        return mData.size();
     }
 
     @Override
     public Movie getItem(int position) {
-        return mData[position];
+        return mData.get(position);
     }
 
     @Override
