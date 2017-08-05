@@ -32,11 +32,8 @@ public class MovieAdapter extends ArrayAdapter<Movie>{
     public MovieAdapter(Context context, int layoutResourceId,
                                  ArrayList<Movie> data) {
         super(context, layoutResourceId, data);
-        Log.d("POSTERDATA", "x");
         mLayoutResourceId = layoutResourceId;
-        Log.d("POSTERDATA", "x");
         mContext = context;
-        Log.d("POSTERDATA", "x");
         mData = data;
         inflater = ( LayoutInflater )mContext.
                 getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -62,7 +59,10 @@ public class MovieAdapter extends ArrayAdapter<Movie>{
                     into(imageButton);
         }
         catch(NullPointerException e) { e.printStackTrace(); }
+
         imageButton.setId(mData.get(position).getmId());
+        Log.i("MOVIE_DATA", "ID: " + imageButton.getId());
+
         return imageButton;
     }
 

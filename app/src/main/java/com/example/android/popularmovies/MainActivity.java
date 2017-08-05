@@ -34,10 +34,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         new FetchMovieTask().execute(MoviePreferences.getPreferredCategory());
     }
 
-    //TODO store id in intent extra text
     @Override
     public void onClick(View v) {
         Intent intentToStartDetailActivity = new Intent(MainActivity.this, DetailActivity.class);
+        intentToStartDetailActivity.putExtra(Intent.EXTRA_TEXT, movieButton.getId());
         startActivity(intentToStartDetailActivity);
     }
 
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             String response = NetworkUtils.movieData();
             try {
                 posterData = MovieJSONUtils.getMovieDetails(response);
-                Log.i("POSTERDATA", posterData.toString());
+                Log.i("POSTER_DATA", posterData.toString());
                 return MovieJSONUtils.getJSONMovieArray(response);
             }
             catch(Exception e){

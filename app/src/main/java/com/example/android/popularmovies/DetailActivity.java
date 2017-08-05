@@ -1,5 +1,6 @@
 package com.example.android.popularmovies;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,16 +27,25 @@ import java.util.ArrayList;
 public class DetailActivity extends AppCompatActivity {
     TextView movieInfo;
     ArrayList<String> movieDetails = new ArrayList<>();
+    String movieID;
     MovieDetailsAdapter detailsAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("MOVIEEEE", "x");
         setContentView(R.layout.activity_detail);
         movieInfo = (TextView) findViewById(R.id.tv_movieInfo);
 
-        Log.d("DETAILS", getApplicationContext().toString());
+        Intent intentThatStartedThisActivity = getIntent();
 
-        new FetchMovieDetails().execute(MoviePreferences.getPreferredCategory());
+        if (intentThatStartedThisActivity != null) {
+            if (intentThatStartedThisActivity.hasExtra(Intent.EXTRA_TEXT)) {
+                movieID = intentThatStartedThisActivity.getStringExtra(Intent.EXTRA_TEXT);
+                Log.i("MOVIE_DETAILS", movieID);
+            }
+        }
+
+        new FetchMovieDetails().execute(movieID);
     }
 
     @Override
@@ -44,19 +54,19 @@ public class DetailActivity extends AppCompatActivity {
         return true;
     }
 
-    private class FetchMovieDetails extends AsyncTask<String, Void, Movie[]>{
+    private class FetchMovieDetails extends AsyncTask<String, Void, String>{
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
         }
 
         @Override
-        protected Movie[] doInBackground(String... params) {
+        protected String doInBackground(String... params) {
             if(params.length == 0) return null;
-            String response = NetworkUtils.movieData();
+            String response = NetworkUtils.specificMovieBuilder(params[0]);
             try {
                 movieDetails = MovieJSONUtils.getSingleMovie(response);
-                return MovieJSONUtils.getJSONMovieArray(response);
+                return response;
             }
             catch(Exception e){
                 e.printStackTrace();
@@ -65,8 +75,8 @@ public class DetailActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(Movie[] movies) {
-            super.onPostExecute(movies);
+        protected void onPostExecute(String details) {
+            super.onPostExecute(details);
             //detailsAdapter.setData(detailsData);
             //movieInfo.setAdapter(detailsAdapter);
         }
