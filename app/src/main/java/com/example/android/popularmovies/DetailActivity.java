@@ -32,10 +32,8 @@ public class DetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("MOVIEEEE", "x");
         setContentView(R.layout.activity_detail);
         movieInfo = (TextView) findViewById(R.id.tv_movieInfo);
-
         Intent intentThatStartedThisActivity = getIntent();
 
         if (intentThatStartedThisActivity != null) {

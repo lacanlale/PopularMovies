@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.example.android.popularmovies.data.MoviePreferences;
@@ -17,11 +18,11 @@ import com.example.android.popularmovies.utilities.NetworkUtils;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity{
     private GridView movieDisplays;
     private MovieAdapter movieAdapter;
     private ArrayList<Movie> posterData;
-    private ImageView movieButton;
+    private ImageButton movieButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,17 +30,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         movieDisplays = (GridView) findViewById(R.id.gv_movieData);
         movieAdapter = new MovieAdapter(this, R.layout.movie_posters, posterData);
-        movieButton = (ImageView) findViewById(R.id.iv_moviePoster);
+        movieButton = (ImageButton) findViewById(R.id.ib_moviePoster);
 
         new FetchMovieTask().execute(MoviePreferences.getPreferredCategory());
+
+        movieButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("AHHH", "x");
+            }
+        });
     }
 
-    @Override
-    public void onClick(View v) {
-        Intent intentToStartDetailActivity = new Intent(MainActivity.this, DetailActivity.class);
-        intentToStartDetailActivity.putExtra(Intent.EXTRA_TEXT, movieButton.getId());
-        startActivity(intentToStartDetailActivity);
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

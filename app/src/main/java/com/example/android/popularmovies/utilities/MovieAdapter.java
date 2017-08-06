@@ -1,13 +1,18 @@
 package com.example.android.popularmovies.utilities;
 
 import android.content.Context;
+import android.content.Intent;
+import android.media.Image;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import com.example.android.popularmovies.DetailActivity;
+import com.example.android.popularmovies.MainActivity;
 import com.example.android.popularmovies.Movie;
 import com.example.android.popularmovies.R;
 import com.squareup.picasso.Picasso;
@@ -35,7 +40,7 @@ public class MovieAdapter extends ArrayAdapter<Movie>{
         mLayoutResourceId = layoutResourceId;
         mContext = context;
         mData = data;
-        inflater = ( LayoutInflater )mContext.
+        inflater = (LayoutInflater) mContext.
                 getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -45,9 +50,9 @@ public class MovieAdapter extends ArrayAdapter<Movie>{
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, final ViewGroup parent) {
         convertView = inflater.inflate(mLayoutResourceId, parent, false);
-        ImageView imageButton = (ImageView) convertView.findViewById(R.id.iv_moviePoster);
+        final ImageButton imageButton = (ImageButton) convertView.findViewById(R.id.ib_moviePoster);
         convertView.setTag(imageButton);
         try {
             String poster = NetworkUtils.posterBuilder(mData.get(position).getmPoster());
@@ -62,7 +67,6 @@ public class MovieAdapter extends ArrayAdapter<Movie>{
 
         imageButton.setId(mData.get(position).getmId());
         Log.i("MOVIE_DATA", "ID: " + imageButton.getId());
-
         return imageButton;
     }
 
