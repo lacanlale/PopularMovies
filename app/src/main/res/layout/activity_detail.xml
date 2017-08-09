@@ -1,11 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:layout_height="match_parent"
+<RelativeLayout
+    android:layout_height="match_parent"
     android:layout_width="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".DetailActivity">
-    <TextView
-        android:layout_width="300dp"
-        android:layout_height="500dp"
-        android:id="@+id/tv_movieInfo"/>
-</LinearLayout>
+    xmlns:android="http://schemas.android.com/apk/res/android">
+        <TextView
+            android:layout_width="384dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:typeface="normal"
+            android:textSize="45sp"
+            android:textColor="#000000"
+            android:id="@+id/tv_title"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_title"
+            android:textSize="20sp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:textColor="#000000"
+            android:id="@+id/tv_rating"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_rating"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:textColor="#000000"
+            android:id="@+id/tv_releaseDate"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_below="@+id/tv_releaseDate"
+            android:textColor="#000000"
+            android:id="@+id/tv_overview"/>
+</RelativeLayout>

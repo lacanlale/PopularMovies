@@ -1,18 +1,13 @@
 package com.example.android.popularmovies.utilities;
 
 import android.content.Context;
-import android.content.Intent;
-import android.media.Image;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 
-import com.example.android.popularmovies.DetailActivity;
-import com.example.android.popularmovies.MainActivity;
 import com.example.android.popularmovies.Movie;
 import com.example.android.popularmovies.R;
 import com.squareup.picasso.Picasso;
@@ -22,11 +17,6 @@ import java.util.ArrayList;
 /**
  * Created by Jonathan on 6/18/2017.
  * Adapter for displaying movie posters to gridView
- * TODO change to be passed an arraylist of movies
- * by being passed an arraylist of movies,
- * we can utilize the movie class
- * and store the movie ID in the tag/id of the imageview
- * this might help retrieving the details
  */
 public class MovieAdapter extends ArrayAdapter<Movie>{
     private Context mContext;
@@ -52,10 +42,9 @@ public class MovieAdapter extends ArrayAdapter<Movie>{
     @Override
     public View getView(int position, View convertView, final ViewGroup parent) {
         convertView = inflater.inflate(mLayoutResourceId, parent, false);
-        final ImageButton imageButton = (ImageButton) convertView.findViewById(R.id.ib_moviePoster);
-        convertView.setTag(imageButton);
+        ImageView imageButton = (ImageView) convertView.findViewById(R.id.iv_moviePoster);
         try {
-            String poster = NetworkUtils.posterBuilder(mData.get(position).getmPoster());
+            String poster = NetworkUtils.posterBuilder(getItem(position).getmPoster());
 
             Log.i("POSTERS", poster);
 
@@ -64,10 +53,9 @@ public class MovieAdapter extends ArrayAdapter<Movie>{
                     into(imageButton);
         }
         catch(NullPointerException e) { e.printStackTrace(); }
-
-        imageButton.setId(mData.get(position).getmId());
-        Log.i("MOVIE_DATA", "ID: " + imageButton.getId());
-        return imageButton;
+        convertView.setTag(imageButton);
+        convertView.setId(getItem(position).getmId());
+        return convertView;
     }
 
     @Override
@@ -83,5 +71,10 @@ public class MovieAdapter extends ArrayAdapter<Movie>{
     @Override
     public long getItemId(int position) {
         return position;
+    }
+
+    @Override
+    public boolean hasStableIds() {
+        return true;
     }
 }

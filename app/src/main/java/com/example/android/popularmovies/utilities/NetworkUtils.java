@@ -25,13 +25,13 @@ public final class NetworkUtils {
      * @param desiredCategory should either be popular or top_rated
      * @return String url based on the desired category
      */
-    public static String categoryBuilder(String desiredCategory) {
+    private static String categoryBuilder(String desiredCategory) {
         String url = BASE_URL;
         url += desiredCategory.equals("popular") ? POPULAR_CATEGORY : TOP_RATED_CATEGORY;
         url += API_KEY;
         return url;
     }
-    public static String posterBuilder(String path){
+    static String posterBuilder(String path){
         return BASE_IMAGE_PATH + path;
     }
     public static String specificMovieBuilder(String id){

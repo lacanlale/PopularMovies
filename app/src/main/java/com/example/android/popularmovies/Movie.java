@@ -6,7 +6,6 @@ package com.example.android.popularmovies;
 
 public class Movie{
     private int mId;
-
     private String mPoster;
     private String mTitle;
     private String mRating;
@@ -24,22 +23,17 @@ public class Movie{
     public String getmPoster() {
         return mPoster;
     }
-
     public String getmTitle() {
         return mTitle;
     }
-
     public String getmRating() {
         return mRating;
     }
-
     public String getmReleaseDate() {
         return mReleaseDate;
     }
-
     public String getmOverview() {
         return mOverview;
     }
-
     public int  getmId() { return  mId; }
 }

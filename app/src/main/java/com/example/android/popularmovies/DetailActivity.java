@@ -8,32 +8,27 @@ import android.util.Log;
 import android.view.Menu;
 import android.widget.TextView;
 
-import com.example.android.popularmovies.data.MoviePreferences;
-import com.example.android.popularmovies.utilities.MovieDetailsAdapter;
 import com.example.android.popularmovies.utilities.MovieJSONUtils;
 import com.example.android.popularmovies.utilities.NetworkUtils;
 
-import java.util.ArrayList;
-
-//TODO Class still needs to be finished
-//Class should be receiving the unique MOVIE KEY
-//This could be used to be passed to MovieJSONUtils to get the details of a single movie.
-
+import java.net.URL;
 /**
  * Details are used for onClick
  * Class should utilize methods that are for displaying
  * the title, rating, release date, and overview
  */
 public class DetailActivity extends AppCompatActivity {
-    TextView movieInfo;
-    ArrayList<String> movieDetails = new ArrayList<>();
+    TextView title, rating, releaseDate, overview;
+    Movie movieDetails;
     String movieID;
-    MovieDetailsAdapter detailsAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        movieInfo = (TextView) findViewById(R.id.tv_movieInfo);
+        title = (TextView) findViewById(R.id.tv_title);
+        rating = (TextView) findViewById(R.id.tv_rating);
+        releaseDate = (TextView) findViewById(R.id.tv_releaseDate);
+        overview = (TextView) findViewById(R.id.tv_overview);
         Intent intentThatStartedThisActivity = getIntent();
 
         if (intentThatStartedThisActivity != null) {
@@ -42,7 +37,6 @@ public class DetailActivity extends AppCompatActivity {
                 Log.i("MOVIE_DETAILS", movieID);
             }
         }
-
         new FetchMovieDetails().execute(movieID);
     }
 
@@ -61,13 +55,14 @@ public class DetailActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             if(params.length == 0) return null;
-            String response = NetworkUtils.specificMovieBuilder(params[0]);
+            String url = NetworkUtils.specificMovieBuilder(params[0]);
             try {
+                String response = NetworkUtils.getHTTPResponse(new URL(url));
                 movieDetails = MovieJSONUtils.getSingleMovie(response);
                 return response;
             }
             catch(Exception e){
-                e.printStackTrace();
+                Log.e("MOVIE_DETAILS", "!!!"+e.toString()+"!!!");
                 return null;
             }
         }
@@ -75,8 +70,10 @@ public class DetailActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String details) {
             super.onPostExecute(details);
-            //detailsAdapter.setData(detailsData);
-            //movieInfo.setAdapter(detailsAdapter);
+            title.setText(movieDetails.getmTitle());
+            rating.setText("Rating: " + movieDetails.getmRating());
+            releaseDate.setText("Released: " + movieDetails.getmReleaseDate());
+            overview.setText(movieDetails.getmOverview());
         }
     }
 }
