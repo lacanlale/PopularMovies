@@ -9,4 +9,4 @@ Details include title, rating, release date, and overview
 
 This a non-commercial, educational application project for the Android OS.
 
-Further explanation of the project is in progress.
+Further explanation found here: http://lacanlale.weebly.com/blog/popular-movies-android-application
